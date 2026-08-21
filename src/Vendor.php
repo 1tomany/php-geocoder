@@ -4,10 +4,7 @@ namespace OneToMany\Geocoder;
 
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
 
-use function explode;
 use function sprintf;
-use function str_contains;
-use function trim;
 
 enum Vendor: string
 {
