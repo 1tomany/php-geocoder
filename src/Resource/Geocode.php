@@ -2,26 +2,41 @@
 
 namespace OneToMany\Geocoder\Resource;
 
-use function implode;
+use OneToMany\Geocoder\Exception\InvalidArgumentException;
 
-readonly class Geocode
+use function trim;
+
+final class Geocode
 {
     /**
      * @var non-empty-string
      */
-    public string $line;
+    public readonly string $street;
 
     /**
-     * @param non-empty-string $street
+     * @throws InvalidArgumentException when the street is empty
      */
     public function __construct(
-        public string $street,
-        public ?string $unit,
-        public ?string $city,
-        public ?string $zip,
-        public ?string $state,
-        public ?string $country,
+        ?string $street,
+        public readonly ?string $unit,
+        public readonly ?string $city,
+        public readonly ?string $zip,
+        public readonly ?string $state,
+        public readonly ?string $country,
     ) {
-        $this->line = implode(' ', [$this->street, $this->unit]);
+        if ('' === $street = trim((string) $street)) {
+            throw new InvalidArgumentException('The street cannot be empty.');
+        }
+
+        $this->street = $street;
+    }
+
+    public string $line {
+        get => $this->createLine();
+    }
+
+    private function createLine(): string
+    {
+        return trim("{$this->street} {$this->unit}");
     }
 }

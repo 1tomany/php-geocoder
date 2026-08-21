@@ -30,11 +30,12 @@ final readonly class Reverse
             throw new InvalidArgumentException('The latitude must be a numeric value.');
         }
 
+        $this->latitude = $latitude;
+
         if (!is_numeric($longitude)) {
             throw new InvalidArgumentException('The longitude must be a numeric value.');
         }
 
-        $this->latitude = $latitude;
         $this->longitude = $longitude;
     }
 }
