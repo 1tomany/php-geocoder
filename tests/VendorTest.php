@@ -48,8 +48,7 @@ final class VendorTest extends TestCase
         Vendor $vendor,
         string $name,
         string $value,
-    ): void
-    {
+    ): void {
         $this->assertSame($name, $vendor->getName());
         $this->assertSame($value, $vendor->getValue());
     }
@@ -68,13 +67,11 @@ final class VendorTest extends TestCase
 
     public function testIsGoogle(): void
     {
-        $this->assertTrue(Vendor::Google->isGoogle());
+        $this->assertTrue(Vendor::Google->isGoogle()); // @phpstan-ignore method.alreadyNarrowedType
     }
-
 
     public function testIsMock(): void
     {
-        $this->assertTrue(Vendor::Mock->isMock());
+        $this->assertTrue(Vendor::Mock->isMock()); // @phpstan-ignore method.alreadyNarrowedType
     }
-
 }
