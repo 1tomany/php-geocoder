@@ -21,11 +21,11 @@ final readonly class Component
         public array $types = [],
         public ?string $languageCode = null,
     ) {
-        if (!$text = trim((string) $this->shortText)) {
+        if ('' === $text = trim((string) $this->shortText)) {
             $text = trim((string) $this->longText);
         }
 
-        $this->text = $text ?: null;
+        $this->text = '' !== $text ? $text : null;
     }
 
     public function hasType(string $type): bool
