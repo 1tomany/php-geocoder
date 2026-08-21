@@ -3,12 +3,8 @@
 namespace OneToMany\Geocoder\Tests\Resource;
 
 use OneToMany\Geocoder\Bridge\Mock\MockProvider;
-use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
-use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Registry;
-use OneToMany\Geocoder\Resource\Response;
-use OneToMany\Geocoder\Resource\Reverse;
 use OneToMany\Geocoder\Vendor;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
