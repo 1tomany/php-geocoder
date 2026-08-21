@@ -24,14 +24,25 @@ A [Symfony bundle](https://github.com/1tomany/php-geocoder-bundle) is available 
 ```php
 use OneToMany\Geocoder\Bridge\Google\GoogleProvider;
 use OneToMany\Geocoder\Bridge\Mock\MockProvider;
+use OneToMany\Geocoder\Bridge\Transport;
 use OneToMany\Geocoder\GeocoderClient;
 use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Reverse;
 use OneToMany\Geocoder\Vendor;
 
+$transport = new Transport(
+    createSymfonyHttpClient(),
+    createSymfonySerializer(),
+);
+
+$googleApiKey = getenv('GOOGLE_API_KEY');
+
 $geocoderClient = new GeocoderClient([
-    'google' => new GoogleProvider(),
-    'mock' => new MockProvider(),
+    new GoogleProvider(
+        transport: $transport,
+        apiKey: $googleApiKey,
+    ),
+    new MockProvider(),
 ]);
 
 $response = $geocoderClient->geocode(
