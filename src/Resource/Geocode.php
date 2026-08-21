@@ -18,11 +18,11 @@ final class Geocode
      */
     public function __construct(
         ?string $street,
-        public readonly ?string $unit,
-        public readonly ?string $city,
-        public readonly ?string $zip,
-        public readonly ?string $state,
-        public readonly ?string $country,
+        public readonly ?string $unit = null,
+        public readonly ?string $city = null,
+        public readonly ?string $zip = null,
+        public readonly ?string $state = null,
+        public readonly ?string $country = null,
     ) {
         if ('' === $street = trim((string) $street)) {
             throw new InvalidArgumentException('The street cannot be empty.');

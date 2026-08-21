@@ -27,15 +27,32 @@ use OneToMany\Geocoder\Bridge\Mock\MockProvider;
 use OneToMany\Geocoder\GeocoderClient;
 use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Reverse;
+use OneToMany\Geocoder\Vendor;
 
 $geocoderClient = new GeocoderClient([
     'google' => new GoogleProvider(),
     'mock' => new MockProvider(),
 ]);
 
-$response = $geocoderClient->geocode('google', new Geocode('123 Main Street', null, 'Dallas', '75205', 'TX'));
+$response = $geocoderClient->geocode(
+    Vendor::Google,
+    new Geocode(
+        street: '123 Main Street',
+        unit: null,
+        city: 'Dallas',
+        zip: '75205',
+        state: 'TX',
+        country: null,
+    ),
+);
 
-$response = $geocoderClient->reverse('google', new Reverse(32.10391494, -96.3931030));
+$response = $geocoderClient->reverse(
+    Vendor::Google,
+    new Reverse(
+        latitude: 32.10391494,
+        longitude: -96.3931030,
+    ),
+);
 ```
 
 ## Credits
