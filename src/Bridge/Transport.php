@@ -54,20 +54,6 @@ readonly class Transport
     }
 
     /**
-     * @return array<string, list<string>>
-     *
-     * @throws RuntimeException when reading the response headers fails
-     */
-    public function headers(HttpResponseInterface $response): array
-    {
-        try {
-            return $response->getHeaders(false);
-        } catch (HttpClientExceptionInterface $e) {
-            throw new RuntimeException('Reading the response headers failed.', previous: $e);
-        }
-    }
-
-    /**
      * @template T of object
      *
      * @param class-string<T> $type

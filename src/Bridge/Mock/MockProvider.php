@@ -13,7 +13,7 @@ use function random_bytes;
 use function sprintf;
 use function strtolower;
 
-final readonly class Provider implements ProviderInterface
+final readonly class MockProvider implements ProviderInterface
 {
     private \Faker\Generator $faker;
 

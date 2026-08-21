@@ -14,7 +14,7 @@ use OneToMany\Geocoder\Vendor;
 use function array_filter;
 use function sprintf;
 
-final readonly class Provider implements ProviderInterface
+final readonly class GoogleProvider implements ProviderInterface
 {
     public const string BASE_URL = 'https://geocode.googleapis.com';
 
@@ -48,6 +48,8 @@ final readonly class Provider implements ProviderInterface
     #[\Override]
     public function geocode(Geocode $geocode): Response
     {
+        $url = $this->url('geocode', 'address');
+
         $query = array_filter([
             'address.addressLines' => $geocode->line,
             'address.locality' => $geocode->city,
@@ -57,7 +59,7 @@ final readonly class Provider implements ProviderInterface
         ]);
 
         try {
-            $response = $this->transport->getRequest($this->url('geocode', 'address'), [
+            $response = $this->transport->getRequest($url, [
                 'headers' => [
                     'x-goog-api-key' => $this->apiKey,
                 ],
@@ -69,7 +71,7 @@ final readonly class Provider implements ProviderInterface
             unset($query);
         }
 
-        return $results->getFirstResult()?->toResponse() ?? Response::createInvalid();
+        return $results->getFirstResult()?->toResponse() ?? Response::notFound();
     }
 
     /**
@@ -78,13 +80,15 @@ final readonly class Provider implements ProviderInterface
     #[\Override]
     public function reverse(Reverse $reverse): Response
     {
+        $url = $this->url('geocode', 'location');
+
         $query = [
             'location.latitude' => $reverse->latitude,
             'location.longitude' => $reverse->longitude,
         ];
 
         try {
-            $response = $this->transport->getRequest($this->url('geocode', 'location'), [
+            $response = $this->transport->getRequest($url, [
                 'headers' => [
                     'x-goog-api-key' => $this->apiKey,
                 ],
@@ -96,7 +100,7 @@ final readonly class Provider implements ProviderInterface
             unset($query);
         }
 
-        return $results->getFirstResult()?->toResponse() ?? Response::createInvalid();
+        return $results->getFirstResult()?->toResponse() ?? Response::notFound();
     }
 
     private function url(string ...$paths): string
