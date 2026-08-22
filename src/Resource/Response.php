@@ -26,7 +26,7 @@ final readonly class Response
         public ?string $country = null,
         public int|float|string|null $latitude = null,
         public int|float|string|null $longitude = null,
-        public int|float $accuracy = 0.0,
+        public int $accuracy = -1,
     ) {
         if (null !== $id) {
             $id = trim($id);
@@ -37,7 +37,7 @@ final readonly class Response
 
     public static function notFound(): static
     {
-        return new static(null, accuracy: -1.0);
+        return new static(null);
     }
 
     /**

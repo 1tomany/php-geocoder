@@ -10,7 +10,7 @@ enum Granularity: string
     case Approximate = 'APPROXIMATE';
     case GranularityUnspecified = 'GRANULARITY_UNSPECIFIED';
 
-    public function getAccuracy(): float
+    public function getAccuracy(): int
     {
         return match ($this) {
             self::Rooftop => 0.99, // 1
