@@ -13,11 +13,11 @@ enum Granularity: string
     public function getAccuracy(): int
     {
         return match ($this) {
-            self::Rooftop => 0.99, // 1
-            self::RangeInterpolated => 0.7, // 25
-            self::GeometricCenter => 0.5, // 250
-            self::Approximate => 0.3, // 1000
-            self::GranularityUnspecified => 0.0, // -1
+            self::Rooftop => 1,
+            self::RangeInterpolated => 25,
+            self::GeometricCenter => 250,
+            self::Approximate => 1000,
+            default => -1,
         };
     }
 }

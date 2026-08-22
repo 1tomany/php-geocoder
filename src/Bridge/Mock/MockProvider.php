@@ -10,6 +10,7 @@ use OneToMany\Geocoder\Vendor;
 
 use function bin2hex;
 use function random_bytes;
+use function random_int;
 use function sprintf;
 use function strtolower;
 
@@ -47,7 +48,7 @@ final readonly class MockProvider implements ProviderInterface
             $geocode->country,
             $this->faker->latitude(),
             $this->faker->longitude(),
-            $this->faker->randomFloat(2, 0, 1),
+            random_int(1, 1000),
         );
     }
 
@@ -67,7 +68,7 @@ final readonly class MockProvider implements ProviderInterface
             $this->faker->countryCode(),
             $reverse->latitude,
             $reverse->longitude,
-            $this->faker->randomFloat(2, 0, 1),
+            random_int(1, 1000),
         );
     }
 
