@@ -29,7 +29,7 @@ final class ResponseTest extends TestCase
         $response = Response::notFound();
 
         $this->assertNull($response->id);
-        $this->assertSame(-1.0, $response->accuracy);
+        $this->assertSame(Response::UNKNOWN_ACCURACY, $response->accuracy);
         $this->assertFalse($response->hasStreet());
         $this->assertFalse($response->hasCoordinates());
         $this->assertFalse($response->isFound());

@@ -2,6 +2,8 @@
 
 namespace OneToMany\Geocoder\Bridge\Google\Response\Geocode\Enum;
 
+use OneToMany\Geocoder\Resource\Response;
+
 enum Granularity: string
 {
     case Rooftop = 'ROOFTOP';
@@ -10,6 +12,9 @@ enum Granularity: string
     case Approximate = 'APPROXIMATE';
     case GranularityUnspecified = 'GRANULARITY_UNSPECIFIED';
 
+    /**
+     * @return int<Response::UNKNOWN_ACCURACY, 1000>
+     */
     public function getAccuracy(): int
     {
         return match ($this) {
@@ -17,7 +22,7 @@ enum Granularity: string
             self::RangeInterpolated => 25,
             self::GeometricCenter => 250,
             self::Approximate => 1000,
-            default => -1,
+            default => Response::UNKNOWN_ACCURACY,
         };
     }
 }
