@@ -14,9 +14,6 @@ final readonly class Response
      */
     public ?string $id;
 
-    /**
-     *
-     */
     public const int UNKNOWN_ACCURACY = -1;
 
     /**
