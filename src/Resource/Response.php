@@ -5,6 +5,7 @@ namespace OneToMany\Geocoder\Resource;
 use OneToMany\Geocoder\Exception\RangeException;
 
 use function is_numeric;
+use function sprintf;
 use function trim;
 
 final readonly class Response
@@ -15,11 +16,12 @@ final readonly class Response
     public ?string $id;
 
     public const int UNKNOWN_ACCURACY = -1;
+    public const int MINIMAL_ACCURACY = 5000;
 
     /**
      * @param int|float|numeric-string|null $latitude
      * @param int|float|numeric-string|null $longitude
-     * @param int<self::UNKNOWN_ACCURACY, 5000> $accuracy
+     * @param int<self::UNKNOWN_ACCURACY, self::MINIMAL_ACCURACY> $accuracy
      *
      * @throws RangeException when the accuracy is not within the expected range
      */
@@ -41,8 +43,8 @@ final readonly class Response
 
         $this->id = '' !== $id ? $id : null;
 
-        if ($this->accuracy < self::UNKNOWN_ACCURACY || $this->accuracy > 5000) {
-            throw new RangeException('The accuracy must be in the range [-1, 5000].');
+        if ($this->accuracy < self::UNKNOWN_ACCURACY || $this->accuracy > self::MINIMAL_ACCURACY) {
+            throw new RangeException(sprintf('The accuracy must be in the range [%d,%d].', self::UNKNOWN_ACCURACY, self::MINIMAL_ACCURACY));
         }
     }
 

@@ -2,9 +2,14 @@
 
 namespace OneToMany\Geocoder\Tests\Resource;
 
+use OneToMany\Geocoder\Exception\RangeException;
 use OneToMany\Geocoder\Resource\Response;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+
+use function random_int;
+
+use const PHP_INT_MAX;
 
 #[Group('UnitTests')]
 #[Group('ResourceTests')]
@@ -22,6 +27,17 @@ final class ResponseTest extends TestCase
         $response = new Response('   ');
 
         $this->assertNull($response->id);
+    }
+
+    public function testConstructorRequiresAccuracyToBeInRange(): void
+    {
+        $accuracy = random_int(Response::MINIMAL_ACCURACY + 1, PHP_INT_MAX);
+        $this->assertGreaterThan(Response::MINIMAL_ACCURACY, $accuracy);
+
+        $this->expectException(RangeException::class);
+        $this->expectExceptionMessageIs('The accuracy must be in the range ['.Response::UNKNOWN_ACCURACY.','.Response::MINIMAL_ACCURACY.'].');
+
+        new Response('place_123', accuracy: $accuracy);
     }
 
     public function testNotFoundReturnsMissingResponse(): void
