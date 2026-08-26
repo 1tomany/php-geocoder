@@ -5,10 +5,6 @@ namespace OneToMany\Geocoder\Bridge\Google\Response\Geocode;
 use OneToMany\Geocoder\Bridge\Google\Response\Geocode\Enum\Granularity;
 use OneToMany\Geocoder\Resource\Response;
 
-use function array_filter;
-use function implode;
-use function trim;
-
 final readonly class Result
 {
     /**
