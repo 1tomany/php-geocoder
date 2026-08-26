@@ -4,6 +4,7 @@ namespace OneToMany\Geocoder\Resource;
 
 use OneToMany\Geocoder\Exception\RangeException;
 
+use function is_int;
 use function is_numeric;
 use function is_string;
 use function trim;
@@ -58,7 +59,7 @@ final readonly class Response
      */
     public function __construct(
         ?string $id,
-        ?string $number = null,
+        int|string|null $number = null,
         ?string $street = null,
         ?string $unit = null,
         ?string $city = null,
@@ -76,8 +77,11 @@ final readonly class Response
 
         $this->id = '' !== $id ? $id : null;
 
-        if (is_string($number)) {
-            $number = trim($number);
+        if (
+            is_string($number)
+            || is_int($number)
+        ) {
+            $number = trim((string) $number);
         }
 
         $this->number = '' !== $number ? $number : null;
