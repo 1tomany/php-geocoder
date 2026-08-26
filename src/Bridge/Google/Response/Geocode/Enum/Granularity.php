@@ -11,6 +11,14 @@ enum Granularity: string
     case GranularityUnspecified = 'GRANULARITY_UNSPECIFIED';
 
     /**
+     * @return non-empty-string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    /**
      * @return ?positive-int
      */
     public function getAccuracy(): ?int
