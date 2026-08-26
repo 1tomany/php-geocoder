@@ -85,10 +85,13 @@ final readonly class MockProvider implements ProviderInterface
         return strtolower(sprintf('%s_%s', $prefix, bin2hex(random_bytes($suffixLength))));
     }
 
+    /**
+     * @return non-empty-lowercase-string
+     */
     private function getGranularity(): string
     {
         /**
-         * @var non-empty-string $granularity
+         * @var non-empty-lowercase-string $granularity
          */
         $granularity = $this->faker->randomElement(['rooftop', 'nearby', 'approximate', 'unknown']);
 
