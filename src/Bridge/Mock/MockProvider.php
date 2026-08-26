@@ -18,6 +18,13 @@ final readonly class MockProvider implements ProviderInterface
 {
     private \Faker\Generator $faker;
 
+    private const array GRANULARITIES = [
+        'rooftop',
+        'nearby',
+        'approximate',
+        'unknown',
+    ];
+
     public function __construct()
     {
         $this->faker = \Faker\Factory::create();
@@ -90,11 +97,6 @@ final readonly class MockProvider implements ProviderInterface
      */
     private function getGranularity(): string
     {
-        /**
-         * @var non-empty-lowercase-string $granularity
-         */
-        $granularity = $this->faker->randomElement(['rooftop', 'nearby', 'approximate', 'unknown']);
-
-        return $granularity;
+        return self::GRANULARITIES[\array_rand(self::GRANULARITIES)];
     }
 }
