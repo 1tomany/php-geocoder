@@ -17,6 +17,11 @@ final readonly class Response
     public ?string $id;
 
     /**
+     * @var ?non-empty-lowercase-string
+     */
+    public ?string $hash;
+
+    /**
      * @var ?non-empty-string
      */
     public ?string $number;
@@ -135,6 +140,14 @@ final readonly class Response
     public function getId(): ?string
     {
         return $this->id;
+    }
+
+    /**
+     * @return ?non-empty-lowercase-string
+     */
+    public function getHash(): ?string
+    {
+        return $this->hash;
     }
 
     /**
