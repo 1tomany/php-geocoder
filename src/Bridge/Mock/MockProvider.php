@@ -48,6 +48,7 @@ final readonly class MockProvider implements ProviderInterface
             $geocode->country,
             $this->faker->latitude(),
             $this->faker->longitude(),
+            $this->getGranularity(),
             random_int(1, 1000),
         );
     }
@@ -68,6 +69,7 @@ final readonly class MockProvider implements ProviderInterface
             $this->faker->countryCode(),
             $reverse->latitude,
             $reverse->longitude,
+            $this->getGranularity(),
             random_int(1, 1000),
         );
     }
@@ -81,5 +83,10 @@ final readonly class MockProvider implements ProviderInterface
     private function generateId(string $prefix, int $suffixLength = 4): string
     {
         return strtolower(sprintf('%s_%s', $prefix, bin2hex(random_bytes($suffixLength))));
+    }
+
+    private function getGranularity(): string
+    {
+        return $this->faker->randomElement(['rooftop', 'nearby', 'approximate', 'unknown']);
     }
 }

@@ -35,6 +35,7 @@ final readonly class Result
             $this->findComponent('country'),
             $this->location?->latitude,
             $this->location?->longitude,
+            $this->granularity->value,
             $this->granularity->getAccuracy(),
         );
     }

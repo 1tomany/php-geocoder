@@ -60,6 +60,7 @@ final readonly class Response
         ?string $country = null,
         public int|float|string|null $latitude = null,
         public int|float|string|null $longitude = null,
+        public ?string $granularity = null,
         public ?int $accuracy = null,
     ) {
         if (null !== $id) {
@@ -184,6 +185,11 @@ final readonly class Response
     public function getLongitude(): int|float|string|null
     {
         return $this->longitude;
+    }
+
+    public function getGranularity(): ?string
+    {
+        return $this->granularity;
     }
 
     /**
