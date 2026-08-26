@@ -44,10 +44,9 @@ final readonly class MockProvider implements ProviderInterface
     #[\Override]
     public function geocode(Geocode $geocode): Response
     {
-        [$number, $street] = explode(' ', $geocode->street, 2);
-
         return new Response(
             $this->generateId('place'),
+            $geocode->number,
             $geocode->street,
             $geocode->unit,
             $geocode->city,
