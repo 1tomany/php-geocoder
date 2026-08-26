@@ -13,4 +13,14 @@ final readonly class Location
         public int|float|string $longitude = 0.0,
     ) {
     }
+
+    public function getLatitude(): float
+    {
+        return (float) $this->latitude;
+    }
+
+    public function getLongitude(): float
+    {
+        return (float) $this->longitude;
+    }
 }

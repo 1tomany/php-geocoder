@@ -30,9 +30,9 @@ final readonly class Result
             $this->findComponent('postal_code'),
             $this->findComponent('administrative_area_level_1'),
             $this->findComponent('country'),
-            $this->location?->latitude,
-            $this->location?->longitude,
-            $this->granularity->value,
+            $this->location?->getLatitude(),
+            $this->location?->getLongitude(),
+            $this->granularity->getValue(),
             $this->granularity->getAccuracy(),
         );
     }
