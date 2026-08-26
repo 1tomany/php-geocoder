@@ -12,45 +12,72 @@ use PHPUnit\Framework\TestCase;
 #[Group('ResourceTests')]
 final class GeocodeTest extends TestCase
 {
-    #[DataProvider('providerEmptyStreet')]
-    public function testConstructorRequiresNonEmptyStreet(?string $street): void
-    {
+    #[DataProvider('providerEmptyNumberAndStreet')]
+    public function testConstructorRequiresNonEmptyNumberAndStreet(
+        ?string $number,
+        ?string $street,
+    ): void {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessageIs('The street cannot be empty.');
+        $this->expectExceptionMessageIs('Both the number and street cannot be empty.');
 
-        new Geocode($street, null, null, null, null, null);
+        new Geocode($number, $street);
     }
 
     /**
-     * @return non-empty-list<array{?string}>
+     * @return non-empty-list<array{?string,?string}>
      */
-    public static function providerEmptyStreet(): array
+    public static function providerEmptyNumberAndStreet(): array
     {
-        return [
-            [null],
-            [''],
-            ['   '],
+        $provider = [
+            ['', ''],
+            [null, null],
+            [' ', null],
+            [' ', '   '],
+            [null, '  '],
+            ['  ', '  '],
         ];
+
+        return $provider;
     }
 
     public function testConstructorTrimsStreet(): void
     {
-        $geocode = new Geocode('  123 Main Street  ', null, null, null, null, null);
+        $this->assertSame('Main Street', new Geocode('123  ', '   Main Street  ')->street);
+    }
 
-        $this->assertSame('123 Main Street', $geocode->street);
+    #[DataProvider('providerNumberStreetAndLine')]
+    public function testConstructorCombinesNumberAndStreet(
+        int|string|null $number,
+        ?string $street,
+        string $line,
+    ): void {
+        $this->assertSame($line, new Geocode($number, $street)->line);
+    }
+
+    /**
+     * @return non-empty-list<array{int|string|null,?string,non-empty-string}>
+     */
+    public static function providerNumberStreetAndLine(): array
+    {
+        $provider = [
+            [null, '8 Plover', '8 Plover'],
+            ['', 'Rusk St', 'Rusk St'],
+            [' ', '19 Berry Way', '19 Berry Way'],
+            [8, 'Main St', '8 Main St'],
+            [0, 'Wall St', '0 Wall St'],
+            ['18 Merry Lane', null, '18 Merry Lane'],
+        ];
+
+        return $provider;
     }
 
     public function testLineCombinesStreetAndUnit(): void
     {
-        $geocode = new Geocode('123 Main Street', 'Suite 100', null, null, null, null);
-
-        $this->assertSame('123 Main Street Suite 100', $geocode->line);
+        $this->assertSame('123 Main Street Suite 100', new Geocode(null, '123 Main Street', 'Suite 100')->line);
     }
 
     public function testLineDoesNotIncludeTrailingWhitespaceWithoutUnit(): void
     {
-        $geocode = new Geocode('123 Main Street', null, null, null, null, null);
-
-        $this->assertSame('123 Main Street', $geocode->line);
+        $this->assertSame('123 Main Street', new Geocode('123', 'Main Street   ')->line);
     }
 }

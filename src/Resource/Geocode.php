@@ -4,19 +4,27 @@ namespace OneToMany\Geocoder\Resource;
 
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
 
+use function is_string;
 use function trim;
+use function vsprintf;
 
 final class Geocode
 {
     /**
-     * @var non-empty-string
+     * @var ?non-empty-string
      */
-    public readonly string $street;
+    public readonly ?string $number;
 
     /**
-     * @throws InvalidArgumentException when the street is empty
+     * @var ?non-empty-string
+     */
+    public readonly ?string $street;
+
+    /**
+     * @throws InvalidArgumentException when the number and street are empty
      */
     public function __construct(
+        int|string|null $number,
         ?string $street,
         public readonly ?string $unit = null,
         public readonly ?string $city = null,
@@ -24,11 +32,21 @@ final class Geocode
         public readonly ?string $state = null,
         public readonly ?string $country = null,
     ) {
-        if ('' === $street = trim((string) $street)) {
-            throw new InvalidArgumentException('The street cannot be empty.');
+        if (is_int($number) || is_string($number)) {
+            $number = trim((string) $number);
         }
 
-        $this->street = $street;
+        $this->number = '' !== $number ? $number : null;
+
+        if (is_string($street)) {
+            $street = trim($street);
+        }
+
+        $this->street = '' !== $street ? $street : null;
+
+        if (null === $this->number && null === $this->street) {
+            throw new InvalidArgumentException('Both the number and street cannot be empty.');
+        }
     }
 
     public string $line {
@@ -37,6 +55,12 @@ final class Geocode
 
     private function createLine(): string
     {
-        return trim("{$this->street} {$this->unit}");
+        $line = vsprintf('%s %s %s', [
+            trim((string) $this->number),
+            trim((string) $this->street),
+            trim((string) $this->unit),
+        ]);
+
+        return trim($line);
     }
 }
