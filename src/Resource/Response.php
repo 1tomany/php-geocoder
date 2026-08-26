@@ -2,7 +2,6 @@
 
 namespace OneToMany\Geocoder\Resource;
 
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
 use OneToMany\Geocoder\Exception\RangeException;
 
 use function array_slice;
@@ -19,9 +18,9 @@ use function trim;
 final readonly class Response
 {
     /**
-     * @var non-empty-string
+     * @var ?non-empty-string
      */
-    public string $id;
+    public ?string $id;
 
     /**
      * @var ?non-empty-string
@@ -88,11 +87,11 @@ final readonly class Response
         public ?string $granularity = null,
         public ?int $accuracy = null,
     ) {
-        if ('' === $id = trim((string) $id)) {
-            throw new InvalidArgumentException('The ID cannot be empty.');
+        if (is_string($id)) {
+            $id = trim($id);
         }
 
-        $this->id = $id;
+        $this->id = '' !== $id ? $id : null;
 
         if (is_int($number) || is_string($number)) {
             $number = trim((string) $number);
@@ -184,13 +183,13 @@ final readonly class Response
 
     public static function notFound(): static
     {
-        return new static(null);
+        return new static(id: null);
     }
 
     /**
-     * @return non-empty-string
+     * @return ?non-empty-string
      */
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }

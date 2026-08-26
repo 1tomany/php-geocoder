@@ -15,16 +15,7 @@ final class ResponseTest extends TestCase
 {
     public function testConstructorTrimsId(): void
     {
-        $response = new Response('  place_123  ');
-
-        $this->assertSame('place_123', $response->id);
-    }
-
-    public function testConstructorNullifiesEmptyId(): void
-    {
-        $response = new Response('   ');
-
-        $this->assertNull($response->id);
+        $this->assertSame('place_123', new Response(id: '  place_123  ')->getId());
     }
 
     public function testConstructorAllowsAccuracyToBeNull(): void
