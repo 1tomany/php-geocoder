@@ -22,6 +22,8 @@ A [Symfony bundle](https://github.com/1tomany/php-geocoder-bundle) is available 
 ## Usage
 
 ```php
+<?php
+
 use OneToMany\Geocoder\Bridge\Google\GoogleProvider;
 use OneToMany\Geocoder\Bridge\Mock\MockProvider;
 use OneToMany\Geocoder\Bridge\Transport;
@@ -59,10 +61,7 @@ $response = $geocoderClient->geocode(
 
 $response = $geocoderClient->reverse(
     Vendor::Google,
-    new Reverse(
-        latitude: 32.10391494,
-        longitude: -96.3931030,
-    ),
+    new Reverse('32.10391494', '-96.3931030'),
 );
 ```
 
