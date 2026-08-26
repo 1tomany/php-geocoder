@@ -10,6 +10,7 @@ use OneToMany\Geocoder\Vendor;
 
 use function array_rand;
 use function bin2hex;
+use function explode;
 use function random_bytes;
 use function random_int;
 use function sprintf;
@@ -64,9 +65,12 @@ final readonly class MockProvider implements ProviderInterface
     #[\Override]
     public function reverse(Reverse $reverse): Response
     {
+        [$number, $street] = explode(' ', $this->faker->streetAddress(), 2);
+
         return new Response(
             $this->generateId('place'),
-            $this->faker->streetAddress(),
+            $number,
+            $street,
             $this->faker->streetSuffix(),
             $this->faker->city(),
             $this->faker->postcode(),
