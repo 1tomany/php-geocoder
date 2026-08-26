@@ -2,9 +2,12 @@
 
 namespace OneToMany\Geocoder\Tests\Resource;
 
+use OneToMany\Geocoder\Exception\RangeException;
 use OneToMany\Geocoder\Resource\Response;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+
+use function random_int;
 
 #[Group('UnitTests')]
 #[Group('ResourceTests')]
@@ -24,12 +27,28 @@ final class ResponseTest extends TestCase
         $this->assertNull($response->id);
     }
 
+    public function testConstructorAllowsAccuracyToBeNull(): void
+    {
+        $this->assertNull(new Response('place_123', accuracy: null)->getAccuracy());
+    }
+
+    public function testConstructorRequiresAccuracyToBeNullOrStrictlyPositive(): void
+    {
+        $accuracy = -1 * random_int(0, 1000);
+        $this->assertLessThanOrEqual(0, $accuracy);
+
+        $this->expectException(RangeException::class);
+        $this->expectExceptionMessageIs('The accuracy must be NULL or a strictly positive integer.');
+
+        new Response('place_123', accuracy: $accuracy); // @phpstan-ignore argument.type
+    }
+
     public function testNotFoundReturnsMissingResponse(): void
     {
         $response = Response::notFound();
 
-        $this->assertNull($response->id);
-        $this->assertSame(-1.0, $response->accuracy);
+        $this->assertNull($response->getId());
+        $this->assertNull($response->getAccuracy());
         $this->assertFalse($response->hasStreet());
         $this->assertFalse($response->hasCoordinates());
         $this->assertFalse($response->isFound());

@@ -2,6 +2,8 @@
 
 namespace OneToMany\Geocoder\Resource;
 
+use OneToMany\Geocoder\Exception\RangeException;
+
 use function is_numeric;
 use function trim;
 
@@ -15,6 +17,9 @@ final readonly class Response
     /**
      * @param int|float|numeric-string|null $latitude
      * @param int|float|numeric-string|null $longitude
+     * @param ?positive-int $accuracy
+     *
+     * @throws RangeException when the accuracy is not-null and not strictly positive
      */
     public function __construct(
         ?string $id,
@@ -26,18 +31,38 @@ final readonly class Response
         public ?string $country = null,
         public int|float|string|null $latitude = null,
         public int|float|string|null $longitude = null,
-        public int|float $accuracy = 0.0,
+        public ?int $accuracy = null,
     ) {
         if (null !== $id) {
             $id = trim($id);
         }
 
         $this->id = '' !== $id ? $id : null;
+
+        if (null !== $this->accuracy && $this->accuracy < 1) {
+            throw new RangeException('The accuracy must be NULL or a strictly positive integer.');
+        }
     }
 
     public static function notFound(): static
     {
-        return new static(null, accuracy: -1.0);
+        return new static(null);
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return ?positive-int
+     */
+    public function getAccuracy(): ?int
+    {
+        return $this->accuracy;
     }
 
     /**
