@@ -37,7 +37,7 @@ final class GeocodeTest extends TestCase
 
     public function testConstructorTrimsStreet(): void
     {
-        $this->assertSame('123 Main Street', new Geocode('123  ', '   Main Street  ')->street);
+        $this->assertSame('Main Street', new Geocode('123  ', '   Main Street  ')->street);
     }
 
     #[DataProvider('providerNumberStreetAndLine')]

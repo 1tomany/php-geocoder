@@ -10,6 +10,7 @@ use OneToMany\Geocoder\Vendor;
 
 use function array_rand;
 use function bin2hex;
+use function explode;
 use function random_bytes;
 use function random_int;
 use function sprintf;
@@ -43,6 +44,8 @@ final readonly class MockProvider implements ProviderInterface
     #[\Override]
     public function geocode(Geocode $geocode): Response
     {
+        [$number, $street] = explode(' ', $geocode->street, 2);
+
         return new Response(
             $this->generateId('place'),
             $geocode->street,

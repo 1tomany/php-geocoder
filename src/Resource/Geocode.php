@@ -10,9 +10,14 @@ use function trim;
 final class Geocode
 {
     /**
-     * @var non-empty-string
+     * @var ?non-empty-string
      */
-    public readonly string $street;
+    public readonly ?string $number;
+
+    /**
+     * @var ?non-empty-string
+     */
+    public readonly ?string $street;
 
     /**
      * @throws InvalidArgumentException when the street is empty
@@ -30,16 +35,19 @@ final class Geocode
             $number = trim((string) $number);
         }
 
+        $number = '' !== $number ? $number : null;
+
         if (is_string($street)) {
             $street = trim($street);
         }
 
-        $street = "{$number} {$street}";
+        $street = '' !== $street ? $street : null;
 
-        if ('' === $street = trim($street)) {
+        if (null === $number && null === $street) {
             throw new InvalidArgumentException('The street cannot be empty.');
         }
 
+        $this->number = $number;
         $this->street = $street;
     }
 
@@ -49,6 +57,6 @@ final class Geocode
 
     private function createLine(): string
     {
-        return trim("{$this->street} {$this->unit}");
+        return trim("{$this->number} {$this->street} {$this->unit}");
     }
 }
