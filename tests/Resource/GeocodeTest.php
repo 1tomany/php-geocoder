@@ -12,11 +12,13 @@ use PHPUnit\Framework\TestCase;
 #[Group('ResourceTests')]
 final class GeocodeTest extends TestCase
 {
-    #[DataProvider('providerEmptyStreet')]
-    public function testConstructorRequiresNonEmptyStreet(?string $street): void
-    {
+    #[DataProvider('providerEmptyNumberAndStreet')]
+    public function testConstructorRequiresNonEmptyNumberAndStreet(
+        ?string $number,
+        ?string $street,
+    ): void {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessageIs('Both the vendor and street cannot be empty.');
+        $this->expectExceptionMessageIs('Both the number and street cannot be empty.');
 
         new Geocode(null, $street, null, null, null, null, null);
     }
@@ -24,12 +26,15 @@ final class GeocodeTest extends TestCase
     /**
      * @return non-empty-list<array{?string}>
      */
-    public static function providerEmptyStreet(): array
+    public static function providerEmptyNumberAndStreet(): array
     {
         $provider = [
-            [null],
-            [''],
-            ['   '],
+            [null, null],
+            ['', ''],
+            [' ', '   '],
+            [' ', null],
+            [null, ''],
+            ['    ', '    '],
         ];
 
         return $provider;
