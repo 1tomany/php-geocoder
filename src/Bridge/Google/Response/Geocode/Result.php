@@ -27,7 +27,8 @@ final readonly class Result
     {
         return new Response(
             $this->placeId,
-            $this->findStreetComponent(),
+            $this->findComponent('street_number'),
+            $this->findComponent('route'),
             $this->findComponent('subpremise'),
             $this->findComponent('locality', 'postal_town'),
             $this->findComponent('postal_code'),
@@ -54,15 +55,5 @@ final readonly class Result
         }
 
         return null;
-    }
-
-    public function findStreetComponent(): ?string
-    {
-        $streetComponentBits = array_filter([
-            $this->findComponent('street_number'),
-            $this->findComponent('route'),
-        ]);
-
-        return trim(implode(' ', $streetComponentBits)) ?: null;
     }
 }
