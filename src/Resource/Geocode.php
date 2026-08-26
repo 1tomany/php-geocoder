@@ -6,6 +6,7 @@ use OneToMany\Geocoder\Exception\InvalidArgumentException;
 
 use function is_string;
 use function trim;
+use function vsprintf;
 
 final class Geocode
 {
@@ -57,6 +58,12 @@ final class Geocode
 
     private function createLine(): string
     {
-        return trim("{$this->number} {$this->street} {$this->unit}");
+        $line = vsprintf('%s %s %s', [
+            trim((string) $this->number),
+            trim((string) $this->street),
+            trim((string) $this->unit),
+        ]);
+
+        return trim($line);
     }
 }
