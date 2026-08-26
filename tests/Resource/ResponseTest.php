@@ -9,8 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 use function random_int;
 
-use const PHP_INT_MAX;
-
 #[Group('UnitTests')]
 #[Group('ResourceTests')]
 final class ResponseTest extends TestCase
@@ -29,13 +27,18 @@ final class ResponseTest extends TestCase
         $this->assertNull($response->id);
     }
 
-    public function testConstructorRequiresAccuracyToBeInRange(): void
+    public function testConstructorAllowsAccuracyToBeNull(): void
     {
-        $accuracy = random_int(Response::MINIMAL_ACCURACY + 1, PHP_INT_MAX);
-        $this->assertGreaterThan(Response::MINIMAL_ACCURACY, $accuracy);
+        $this->assertNull(new Response('place_123', accuracy: null)->getAccuracy());
+    }
+
+    public function testConstructorRequiresAccuracyToBeNullOrStrictlyPositive(): void
+    {
+        $accuracy = -1 * random_int(0, 1000);
+        $this->assertLessThanOrEqual(0, $accuracy);
 
         $this->expectException(RangeException::class);
-        $this->expectExceptionMessageIs('The accuracy must be in the range ['.Response::UNKNOWN_ACCURACY.','.Response::MINIMAL_ACCURACY.'].');
+        $this->expectExceptionMessageIs('The accuracy must be NULL or a strictly positive integer.');
 
         new Response('place_123', accuracy: $accuracy);
     }
@@ -44,8 +47,8 @@ final class ResponseTest extends TestCase
     {
         $response = Response::notFound();
 
-        $this->assertNull($response->id);
-        $this->assertSame(Response::UNKNOWN_ACCURACY, $response->accuracy);
+        $this->assertNull($response->getId());
+        $this->assertNull($response->getAccuracy());
         $this->assertFalse($response->hasStreet());
         $this->assertFalse($response->hasCoordinates());
         $this->assertFalse($response->isFound());

@@ -5,7 +5,6 @@ namespace OneToMany\Geocoder\Resource;
 use OneToMany\Geocoder\Exception\RangeException;
 
 use function is_numeric;
-use function sprintf;
 use function trim;
 
 final readonly class Response
@@ -15,15 +14,12 @@ final readonly class Response
      */
     public ?string $id;
 
-    public const int UNKNOWN_ACCURACY = -1;
-    public const int MINIMAL_ACCURACY = 5000;
-
     /**
      * @param int|float|numeric-string|null $latitude
      * @param int|float|numeric-string|null $longitude
-     * @param int<self::UNKNOWN_ACCURACY, self::MINIMAL_ACCURACY> $accuracy
+     * @param ?positive-int $accuracy
      *
-     * @throws RangeException when the accuracy is not within the expected range
+     * @throws RangeException when the accuracy is not-null and not strictly positive
      */
     public function __construct(
         ?string $id,
@@ -35,7 +31,7 @@ final readonly class Response
         public ?string $country = null,
         public int|float|string|null $latitude = null,
         public int|float|string|null $longitude = null,
-        public int $accuracy = self::UNKNOWN_ACCURACY,
+        public ?int $accuracy = null,
     ) {
         if (null !== $id) {
             $id = trim($id);
@@ -43,14 +39,30 @@ final readonly class Response
 
         $this->id = '' !== $id ? $id : null;
 
-        if ($this->accuracy < self::UNKNOWN_ACCURACY || $this->accuracy > self::MINIMAL_ACCURACY) {
-            throw new RangeException(sprintf('The accuracy must be in the range [%d,%d].', self::UNKNOWN_ACCURACY, self::MINIMAL_ACCURACY));
+        if (null !== $this->accuracy && $this->accuracy < 1) {
+            throw new RangeException('The accuracy must be NULL or a strictly positive integer.');
         }
     }
 
     public static function notFound(): static
     {
         return new static(null);
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return ?positive-int
+     */
+    public function getAccuracy(): ?int
+    {
+        return $this->accuracy;
     }
 
     /**
