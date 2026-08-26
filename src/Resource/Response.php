@@ -58,6 +58,54 @@ final readonly class Response
     }
 
     /**
+     * @return ?non-empty-string
+     */
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getZip(): ?string
+    {
+        return $this->zip;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    /**
      * @return ?positive-int
      */
     public function getAccuracy(): ?int
