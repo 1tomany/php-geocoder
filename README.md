@@ -49,14 +49,7 @@ $geocoderClient = new GeocoderClient([
 
 $response = $geocoderClient->geocode(
     Vendor::Google,
-    new Geocode(
-        street: '123 Main Street',
-        unit: null,
-        city: 'Dallas',
-        zip: '75205',
-        state: 'TX',
-        country: null,
-    ),
+    new Geocode('123 Main Street', null, 'Dallas', '75205', 'TX', null),
 );
 
 $response = $geocoderClient->reverse(
