@@ -49,6 +49,9 @@ final class GeocodeTest extends TestCase
         $this->assertSame($line, new Geocode($number, $street)->line);
     }
 
+    /**
+     * @return non-empty-list<array{int|string|null,?string,non-empty-string}>
+     */
     public static function providerNumberStreetAndLine(): array
     {
         $provider = [
