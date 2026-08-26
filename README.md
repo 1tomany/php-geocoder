@@ -52,10 +52,7 @@ $response = $geocoderClient->geocode(
     new Geocode('123 Main Street', null, 'Dallas', '75205', 'TX', null),
 );
 
-$response = $geocoderClient->reverse(
-    Vendor::Google,
-    new Reverse('32.10391494', '-96.3931030'),
-);
+$response = $geocoderClient->reverse(Vendor::Google, new Reverse('32.10391494', '-96.3931030'));
 ```
 
 ## Credits
