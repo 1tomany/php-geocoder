@@ -2,24 +2,24 @@
 
 namespace OneToMany\Geocoder\Resource;
 
+use OneToMany\Geocoder\Exception\InvalidArgumentException;
 use OneToMany\Geocoder\Exception\RangeException;
 
+use function func_get_args;
+use function hash;
+use function implode;
 use function is_int;
 use function is_numeric;
 use function is_string;
+use function Symfony\Component\String\u;
 use function trim;
 
 final readonly class Response
 {
     /**
-     * @var ?non-empty-string
+     * @var non-empty-string
      */
-    public ?string $id;
-
-    /**
-     * @var ?non-empty-lowercase-string
-     */
-    public ?string $hash;
+    public string $id;
 
     /**
      * @var ?non-empty-string
@@ -57,6 +57,11 @@ final readonly class Response
     public ?string $country;
 
     /**
+     * @var ?non-empty-lowercase-string
+     */
+    public ?string $hash;
+
+    /**
      * @param int|float|numeric-string|null $latitude
      * @param int|float|numeric-string|null $longitude
      *
@@ -76,11 +81,11 @@ final readonly class Response
         public ?string $granularity = null,
         public ?int $accuracy = null,
     ) {
-        if (null !== $id) {
-            $id = trim($id);
+        if ('' === $id = trim((string) $id)) {
+            throw new InvalidArgumentException('The ID cannot be empty.');
         }
 
-        $this->id = '' !== $id ? $id : null;
+        $this->id = $id;
 
         if (is_int($number) || is_string($number)) {
             $number = trim((string) $number);
@@ -127,6 +132,33 @@ final readonly class Response
         if (null !== $this->accuracy && $this->accuracy < 1) {
             throw new RangeException('The accuracy must be NULL or a strictly positive integer.');
         }
+
+        $this->hash = static::hash($this->number, $this->street, $this->unit, $this->city, $this->zip, $this->state, $this->country);
+    }
+
+    /**
+     * @return ?non-empty-lowercase-string
+     */
+    public static function hash(
+        ?string $number = null,
+        ?string $street = null,
+        ?string $unit = null,
+        ?string $city = null,
+        ?string $zip = null,
+        ?string $state = null,
+        ?string $country = null,
+    ): ?string {
+        $hashBits = [];
+
+        foreach (func_get_args() as $bit) {
+            $bit = u((string) $bit)->ascii()->camel()->lower()->trim();
+
+            if (false === $bit->isEmpty()) {
+                $hashBits[] = $bit->toString();
+            }
+        }
+
+        return [] !== $hashBits ? hash('sha256', implode(':', $hashBits)) : null;
     }
 
     public static function notFound(): static
@@ -135,19 +167,11 @@ final readonly class Response
     }
 
     /**
-     * @return ?non-empty-string
+     * @return non-empty-string
      */
-    public function getId(): ?string
+    public function getId(): string
     {
         return $this->id;
-    }
-
-    /**
-     * @return ?non-empty-lowercase-string
-     */
-    public function getHash(): ?string
-    {
-        return $this->hash;
     }
 
     /**
@@ -204,6 +228,14 @@ final readonly class Response
     public function getCountry(): ?string
     {
         return $this->country;
+    }
+
+    /**
+     * @return ?non-empty-lowercase-string
+     */
+    public function getHash(): ?string
+    {
+        return $this->hash;
     }
 
     /**
