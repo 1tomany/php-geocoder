@@ -69,10 +69,10 @@ final readonly class MockProvider implements ProviderInterface
             $this->generateId('place'),
             $this->faker->buildingNumber(),
             $this->faker->streetName(),
-            $this->faker->secondaryAddress(),
+            $this->faker->format('secondaryAddress'), // @phpstan-ignore argument.type
             $this->faker->city(),
             $this->faker->postcode(),
-            $this->faker->stateAbbr(),
+            $this->faker->format('stateAbbr'), // @phpstan-ignore argument.type
             $this->faker->countryCode(),
             $reverse->latitude,
             $reverse->longitude,
