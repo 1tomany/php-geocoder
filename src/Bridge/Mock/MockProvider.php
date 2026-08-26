@@ -45,6 +45,7 @@ final readonly class MockProvider implements ProviderInterface
     {
         return new Response(
             $this->generateId('place'),
+            null,
             $geocode->street,
             $geocode->unit,
             $geocode->city,
