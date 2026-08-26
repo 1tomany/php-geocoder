@@ -5,7 +5,9 @@ namespace OneToMany\Geocoder\Resource;
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
 use OneToMany\Geocoder\Exception\RangeException;
 
+use function array_slice;
 use function func_get_args;
+use function func_num_args;
 use function hash;
 use function implode;
 use function is_int;
@@ -60,6 +62,11 @@ final readonly class Response
      * @var ?non-empty-lowercase-string
      */
     public ?string $hash;
+
+    /**
+     * @var positive-int
+     */
+    public const int COMPONENT_COUNT = 7;
 
     /**
      * @param int|float|numeric-string|null $latitude
@@ -148,17 +155,31 @@ final readonly class Response
         ?string $state = null,
         ?string $country = null,
     ): ?string {
-        $hashBits = [];
+        $argv = func_get_args();
 
-        foreach (func_get_args() as $bit) {
-            $bit = u((string) $bit)->ascii()->camel()->lower()->trim();
+        if (func_num_args() > self::COMPONENT_COUNT) {
+            $argv = array_slice($argv, 0, self::COMPONENT_COUNT);
+        }
+
+        if ([] === $argv) {
+            return null;
+        }
+
+        $bits = [];
+
+        foreach ($argv as $bit) {
+            if (!is_string($bit)) {
+                continue;
+            }
+
+            $bit = u($bit)->ascii()->camel()->lower()->trim();
 
             if (false === $bit->isEmpty()) {
-                $hashBits[] = $bit->toString();
+                $bits[] = $bit->toString();
             }
         }
 
-        return [] !== $hashBits ? hash('sha256', implode(':', $hashBits)) : null;
+        return [] !== $bits ? hash('sha256', implode(':', $bits)) : null;
     }
 
     public static function notFound(): static
