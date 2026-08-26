@@ -8,6 +8,7 @@ use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 use OneToMany\Geocoder\Vendor;
 
+use function array_rand;
 use function bin2hex;
 use function random_bytes;
 use function random_int;
@@ -17,6 +18,10 @@ use function strtolower;
 final readonly class MockProvider implements ProviderInterface
 {
     private \Faker\Generator $faker;
+
+    private const array GRANULARITIES = [
+        'rooftop', 'nearby', 'approximate', 'unknown',
+    ];
 
     public function __construct()
     {
@@ -48,6 +53,7 @@ final readonly class MockProvider implements ProviderInterface
             $geocode->country,
             $this->faker->latitude(),
             $this->faker->longitude(),
+            $this->getGranularity(),
             random_int(1, 1000),
         );
     }
@@ -68,6 +74,7 @@ final readonly class MockProvider implements ProviderInterface
             $this->faker->countryCode(),
             $reverse->latitude,
             $reverse->longitude,
+            $this->getGranularity(),
             random_int(1, 1000),
         );
     }
@@ -81,5 +88,13 @@ final readonly class MockProvider implements ProviderInterface
     private function generateId(string $prefix, int $suffixLength = 4): string
     {
         return strtolower(sprintf('%s_%s', $prefix, bin2hex(random_bytes($suffixLength))));
+    }
+
+    /**
+     * @return non-empty-lowercase-string
+     */
+    private function getGranularity(): string
+    {
+        return self::GRANULARITIES[array_rand(self::GRANULARITIES)];
     }
 }

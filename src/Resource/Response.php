@@ -15,22 +15,52 @@ final readonly class Response
     public ?string $id;
 
     /**
+     * @var ?non-empty-string
+     */
+    public ?string $street;
+
+    /**
+     * @var ?non-empty-string
+     */
+    public ?string $unit;
+
+    /**
+     * @var ?non-empty-string
+     */
+    public ?string $city;
+
+    /**
+     * @var ?non-empty-string
+     */
+    public ?string $zip;
+
+    /**
+     * @var ?non-empty-string
+     */
+    public ?string $state;
+
+    /**
+     * @var ?non-empty-string
+     */
+    public ?string $country;
+
+    /**
      * @param int|float|numeric-string|null $latitude
      * @param int|float|numeric-string|null $longitude
-     * @param ?positive-int $accuracy
      *
      * @throws RangeException when the accuracy is not-null and not strictly positive
      */
     public function __construct(
         ?string $id,
-        public ?string $street = null,
-        public ?string $unit = null,
-        public ?string $city = null,
-        public ?string $zip = null,
-        public ?string $state = null,
-        public ?string $country = null,
+        ?string $street = null,
+        ?string $unit = null,
+        ?string $city = null,
+        ?string $zip = null,
+        ?string $state = null,
+        ?string $country = null,
         public int|float|string|null $latitude = null,
         public int|float|string|null $longitude = null,
+        public ?string $granularity = null,
         public ?int $accuracy = null,
     ) {
         if (null !== $id) {
@@ -38,6 +68,42 @@ final readonly class Response
         }
 
         $this->id = '' !== $id ? $id : null;
+
+        if (null !== $street) {
+            $street = trim($street);
+        }
+
+        $this->street = '' !== $street ? $street : null;
+
+        if (null !== $unit) {
+            $unit = trim($unit);
+        }
+
+        $this->unit = '' !== $unit ? $unit : null;
+
+        if (null !== $city) {
+            $city = trim($city);
+        }
+
+        $this->city = '' !== $city ? $city : null;
+
+        if (null !== $zip) {
+            $zip = trim($zip);
+        }
+
+        $this->zip = '' !== $zip ? $zip : null;
+
+        if (null !== $state) {
+            $state = trim($state);
+        }
+
+        $this->state = '' !== $state ? $state : null;
+
+        if (null !== $country) {
+            $country = trim($country);
+        }
+
+        $this->country = '' !== $country ? $country : null;
 
         if (null !== $this->accuracy && $this->accuracy < 1) {
             throw new RangeException('The accuracy must be NULL or a strictly positive integer.');
@@ -55,6 +121,75 @@ final readonly class Response
     public function getId(): ?string
     {
         return $this->id;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getZip(): ?string
+    {
+        return $this->zip;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    /**
+     * @return int|float|numeric-string|null
+     */
+    public function getLatitude(): int|float|string|null
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @return int|float|numeric-string|null
+     */
+    public function getLongitude(): int|float|string|null
+    {
+        return $this->longitude;
+    }
+
+    public function getGranularity(): ?string
+    {
+        return $this->granularity;
     }
 
     /**
