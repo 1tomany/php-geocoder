@@ -20,21 +20,21 @@ final class GeocodeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageIs('Both the number and street cannot be empty.');
 
-        new Geocode(null, $street, null, null, null, null, null);
+        new Geocode($number, $street);
     }
 
     /**
-     * @return non-empty-list<array{?string}>
+     * @return non-empty-list<array{?string,?string}>
      */
     public static function providerEmptyNumberAndStreet(): array
     {
         $provider = [
-            [null, null],
             ['', ''],
-            [' ', '   '],
+            [null, null],
             [' ', null],
-            [null, ''],
-            ['    ', '    '],
+            [' ', '   '],
+            [null, '  '],
+            ['  ', '  '],
         ];
 
         return $provider;
