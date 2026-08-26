@@ -77,10 +77,7 @@ final readonly class Response
 
         $this->id = '' !== $id ? $id : null;
 
-        if (
-            is_string($number)
-            || is_int($number)
-        ) {
+        if (is_int($number) || is_string($number)) {
             $number = trim((string) $number);
         }
 

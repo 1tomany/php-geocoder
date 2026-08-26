@@ -4,6 +4,7 @@ namespace OneToMany\Geocoder\Resource;
 
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
 
+use function is_string;
 use function trim;
 
 final class Geocode
@@ -17,6 +18,7 @@ final class Geocode
      * @throws InvalidArgumentException when the street is empty
      */
     public function __construct(
+        int|string|null $number,
         ?string $street,
         public readonly ?string $unit = null,
         public readonly ?string $city = null,
@@ -24,7 +26,17 @@ final class Geocode
         public readonly ?string $state = null,
         public readonly ?string $country = null,
     ) {
-        if ('' === $street = trim((string) $street)) {
+        if (is_int($number) || is_string($number)) {
+            $number = trim((string) $number);
+        }
+
+        if (is_string($street)) {
+            $street = trim($street);
+        }
+
+        $street = "{$number} {$street}";
+
+        if ('' === $street = trim($street)) {
             throw new InvalidArgumentException('The street cannot be empty.');
         }
 
