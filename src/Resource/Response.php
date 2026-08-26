@@ -4,7 +4,9 @@ namespace OneToMany\Geocoder\Resource;
 
 use OneToMany\Geocoder\Exception\RangeException;
 
+use function is_int;
 use function is_numeric;
+use function is_string;
 use function trim;
 
 final readonly class Response
@@ -13,6 +15,11 @@ final readonly class Response
      * @var ?non-empty-string
      */
     public ?string $id;
+
+    /**
+     * @var ?non-empty-string
+     */
+    public ?string $number;
 
     /**
      * @var ?non-empty-string
@@ -52,6 +59,7 @@ final readonly class Response
      */
     public function __construct(
         ?string $id,
+        int|string|null $number = null,
         ?string $street = null,
         ?string $unit = null,
         ?string $city = null,
@@ -69,37 +77,43 @@ final readonly class Response
 
         $this->id = '' !== $id ? $id : null;
 
-        if (null !== $street) {
+        if (is_int($number) || is_string($number)) {
+            $number = trim((string) $number);
+        }
+
+        $this->number = '' !== $number ? $number : null;
+
+        if (is_string($street)) {
             $street = trim($street);
         }
 
         $this->street = '' !== $street ? $street : null;
 
-        if (null !== $unit) {
+        if (is_string($unit)) {
             $unit = trim($unit);
         }
 
         $this->unit = '' !== $unit ? $unit : null;
 
-        if (null !== $city) {
+        if (is_string($city)) {
             $city = trim($city);
         }
 
         $this->city = '' !== $city ? $city : null;
 
-        if (null !== $zip) {
+        if (is_string($zip)) {
             $zip = trim($zip);
         }
 
         $this->zip = '' !== $zip ? $zip : null;
 
-        if (null !== $state) {
+        if (is_string($state)) {
             $state = trim($state);
         }
 
         $this->state = '' !== $state ? $state : null;
 
-        if (null !== $country) {
+        if (is_string($country)) {
             $country = trim($country);
         }
 
@@ -121,6 +135,14 @@ final readonly class Response
     public function getId(): ?string
     {
         return $this->id;
+    }
+
+    /**
+     * @return ?non-empty-string
+     */
+    public function getNumber(): ?string
+    {
+        return $this->number;
     }
 
     /**
