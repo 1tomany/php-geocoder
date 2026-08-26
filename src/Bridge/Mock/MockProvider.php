@@ -8,6 +8,7 @@ use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 use OneToMany\Geocoder\Vendor;
 
+use function array_rand;
 use function bin2hex;
 use function random_bytes;
 use function random_int;
@@ -19,10 +20,7 @@ final readonly class MockProvider implements ProviderInterface
     private \Faker\Generator $faker;
 
     private const array GRANULARITIES = [
-        'rooftop',
-        'nearby',
-        'approximate',
-        'unknown',
+        'rooftop', 'nearby', 'approximate', 'unknown',
     ];
 
     public function __construct()
@@ -97,6 +95,6 @@ final readonly class MockProvider implements ProviderInterface
      */
     private function getGranularity(): string
     {
-        return self::GRANULARITIES[\array_rand(self::GRANULARITIES)];
+        return self::GRANULARITIES[array_rand(self::GRANULARITIES)];
     }
 }
