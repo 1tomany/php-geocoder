@@ -66,11 +66,12 @@ final readonly class MockProvider implements ProviderInterface
     {
         return new Response(
             $this->generateId('place'),
-            $this->faker->streetAddress(),
-            $this->faker->streetSuffix(),
+            $this->faker->buildingNumber(),
+            $this->faker->streetName(),
+            $this->faker->secondaryAddress(),
             $this->faker->city(),
             $this->faker->postcode(),
-            $this->faker->countryCode(),
+            $this->faker->stateAbbr(),
             $this->faker->countryCode(),
             $reverse->latitude,
             $reverse->longitude,
