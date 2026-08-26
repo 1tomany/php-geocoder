@@ -16,7 +16,7 @@ final class GeocodeTest extends TestCase
     public function testConstructorRequiresNonEmptyStreet(?string $street): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessageIs('The street cannot be empty.');
+        $this->expectExceptionMessageIs('Both the vendor and street cannot be empty.');
 
         new Geocode(null, $street, null, null, null, null, null);
     }

@@ -21,7 +21,7 @@ final class Geocode
     public readonly ?string $street;
 
     /**
-     * @throws InvalidArgumentException when the street is empty
+     * @throws InvalidArgumentException when the number and street are empty
      */
     public function __construct(
         int|string|null $number,
@@ -45,7 +45,7 @@ final class Geocode
         $street = '' !== $street ? $street : null;
 
         if (null === $number && null === $street) {
-            throw new InvalidArgumentException('The street cannot be empty.');
+            throw new InvalidArgumentException('Both the number and street cannot be empty.');
         }
 
         $this->number = $number;
