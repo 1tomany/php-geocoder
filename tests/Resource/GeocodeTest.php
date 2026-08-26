@@ -45,8 +45,7 @@ final class GeocodeTest extends TestCase
         int|string|null $number,
         ?string $street,
         string $line,
-    ): void
-    {
+    ): void {
         $this->assertSame($line, new Geocode($number, $street)->line);
     }
 
