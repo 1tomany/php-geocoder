@@ -87,6 +87,7 @@ final readonly class MockProvider implements ProviderInterface
 
     private function getGranularity(): string
     {
+        /** @return non-empty-string */
         return $this->faker->randomElement(['rooftop', 'nearby', 'approximate', 'unknown']);
     }
 }
