@@ -40,7 +40,7 @@ final class ResponseTest extends TestCase
         $this->expectException(RangeException::class);
         $this->expectExceptionMessageIs('The accuracy must be NULL or a strictly positive integer.');
 
-        new Response('place_123', accuracy: $accuracy);
+        new Response('place_123', accuracy: $accuracy); // @phpstan-ignore argument.type
     }
 
     public function testNotFoundReturnsMissingResponse(): void
