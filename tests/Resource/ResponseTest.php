@@ -42,7 +42,7 @@ final class ResponseTest extends TestCase
         $this->assertNull($response->getAccuracy());
         $this->assertFalse($response->hasStreet());
         $this->assertFalse($response->hasCoordinates());
-        $this->assertFalse($response->isFound());
+        $this->assertFalse($response->isValid());
     }
 
     public function testIsFoundRequiresStreetAndCoordinates(): void
@@ -56,7 +56,7 @@ final class ResponseTest extends TestCase
 
         $this->assertTrue($response->hasStreet());
         $this->assertTrue($response->hasCoordinates());
-        $this->assertTrue($response->isFound());
+        $this->assertTrue($response->isValid());
     }
 
     public function testIsFoundRequiresStreet(): void
@@ -65,7 +65,7 @@ final class ResponseTest extends TestCase
 
         $this->assertFalse($response->hasStreet());
         $this->assertTrue($response->hasCoordinates());
-        $this->assertFalse($response->isFound());
+        $this->assertFalse($response->isValid());
     }
 
     public function testIsFoundRequiresCoordinates(): void
@@ -74,6 +74,6 @@ final class ResponseTest extends TestCase
 
         $this->assertTrue($response->hasStreet());
         $this->assertFalse($response->hasCoordinates());
-        $this->assertFalse($response->isFound());
+        $this->assertFalse($response->isValid());
     }
 }

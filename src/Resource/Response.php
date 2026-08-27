@@ -289,10 +289,11 @@ final readonly class Response
 
     /**
      * @phpstan-assert-if-true non-empty-string $this->street
+     * @phpstan-assert-if-true non-empty-string $this->getStreet()
      */
     public function hasStreet(): bool
     {
-        return null !== $this->street ? ('' !== trim($this->street)) : false;
+        return null !== $this->getStreet();
     }
 
     /**
@@ -310,8 +311,10 @@ final readonly class Response
      * @phpstan-assert-if-true non-empty-string $this->street
      * @phpstan-assert-if-true int|float|numeric-string $this->latitude
      * @phpstan-assert-if-true int|float|numeric-string $this->longitude
+     * @phpstan-assert-if-true int|float|numeric-string $this->getLatitude()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getLongitude()
      */
-    public function isFound(): bool
+    public function isValid(): bool
     {
         return $this->hasStreet() && $this->hasCoordinates();
     }
