@@ -298,6 +298,8 @@ final readonly class Response
     /**
      * @phpstan-assert-if-true int|float|numeric-string $this->latitude
      * @phpstan-assert-if-true int|float|numeric-string $this->longitude
+     * @phpstan-assert-if-true int|float|numeric-string $this->getLatitude()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getLongitude()
      */
     public function hasCoordinates(): bool
     {
