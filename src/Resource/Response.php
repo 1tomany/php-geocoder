@@ -10,7 +10,6 @@ use function func_num_args;
 use function hash;
 use function implode;
 use function is_int;
-use function is_numeric;
 use function is_string;
 use function Symfony\Component\String\u;
 use function trim;
@@ -288,29 +287,37 @@ final readonly class Response
     }
 
     /**
+     * @phpstan-assert-if-true non-empty-string $this->id
      * @phpstan-assert-if-true non-empty-string $this->street
-     */
-    public function hasStreet(): bool
-    {
-        return null !== $this->street ? ('' !== trim($this->street)) : false;
-    }
-
-    /**
+     * @phpstan-assert-if-true non-empty-string $this->city
+     * @phpstan-assert-if-true non-empty-string $this->state
+     * @phpstan-assert-if-true non-empty-string $this->country
+     * @phpstan-assert-if-true non-empty-lowercase-string $this->hash
      * @phpstan-assert-if-true int|float|numeric-string $this->latitude
      * @phpstan-assert-if-true int|float|numeric-string $this->longitude
+     * @phpstan-assert-if-true positive-int $this->accuracy
+     * @phpstan-assert-if-true non-empty-string $this->getId()
+     * @phpstan-assert-if-true non-empty-string $this->getStreet()
+     * @phpstan-assert-if-true non-empty-string $this->getCity()
+     * @phpstan-assert-if-true non-empty-string $this->getState()
+     * @phpstan-assert-if-true non-empty-string $this->getCountry()
+     * @phpstan-assert-if-true non-empty-lowercase-string $this->getHash()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getLatitude()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getLongitude()
+     * @phpstan-assert-if-true positive-int $this->getAccuracy()
      */
-    public function hasCoordinates(): bool
+    public function isValid(): bool
     {
-        return is_numeric($this->latitude) && is_numeric($this->longitude);
-    }
-
-    /**
-     * @phpstan-assert-if-true non-empty-string $this->street
-     * @phpstan-assert-if-true int|float|numeric-string $this->latitude
-     * @phpstan-assert-if-true int|float|numeric-string $this->longitude
-     */
-    public function isFound(): bool
-    {
-        return $this->hasStreet() && $this->hasCoordinates();
+        return
+            null !== $this->getId()
+            && null !== $this->getStreet()
+            && null !== $this->getCity()
+            && null !== $this->getState()
+            && null !== $this->getCountry()
+            && null !== $this->getHash()
+            && null !== $this->getLatitude()
+            && null !== $this->getLongitude()
+            && null !== $this->getAccuracy()
+        ;
     }
 }
