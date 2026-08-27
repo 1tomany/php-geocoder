@@ -15,7 +15,7 @@ final class ResponseTest extends TestCase
 {
     public function testConstructorTrimsId(): void
     {
-        $this->assertSame('place_123', new Response(id: '  place_123  ')->getId());
+        $this->assertSame('resp_123', new Response(id: '  resp_123  ')->getId());
     }
 
     public function testConstructorAllowsAccuracyToBeNull(): void
@@ -31,7 +31,7 @@ final class ResponseTest extends TestCase
         $this->expectException(RangeException::class);
         $this->expectExceptionMessageIs('The accuracy must be NULL or a strictly positive integer.');
 
-        new Response('place_123', accuracy: $accuracy);
+        new Response('resp_123', accuracy: $accuracy);
     }
 
     public function testNotFoundReturnsInvalidResponse(): void
@@ -138,7 +138,7 @@ final class ResponseTest extends TestCase
             country: 'US',
             latitude: '32.8761733',
             longitude: '-97.1125216',
-            accuracy: 1,
+            accuracy: random_int(1, 100),
         );
 
         $this->assertNotNull($response->getId());
