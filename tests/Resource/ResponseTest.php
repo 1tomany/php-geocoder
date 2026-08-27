@@ -34,46 +34,122 @@ final class ResponseTest extends TestCase
         new Response('place_123', accuracy: $accuracy);
     }
 
-    public function testNotFoundReturnsMissingResponse(): void
+    public function testNotFoundReturnsInvalidResponse(): void
     {
-        $response = Response::notFound();
+        $this->assertFalse(Response::notFound()->isValid());
+    }
+
+    public function testIsValidRequiresNonEmptyId(): void
+    {
+        $response = new Response(id: null);
 
         $this->assertNull($response->getId());
-        $this->assertNull($response->getAccuracy());
-        $this->assertFalse($response->hasStreet());
-        $this->assertFalse($response->hasCoordinates());
         $this->assertFalse($response->isValid());
     }
 
-    public function testIsFoundRequiresStreetAndCoordinates(): void
+    public function testIsValidRequiresNonEmptyStreet(): void
+    {
+        $response = new Response(id: 'resp_123', street: null);
+
+        $this->assertNull($response->getStreet());
+        $this->assertFalse($response->isValid());
+    }
+
+    public function testIsValidRequiresNonEmptyCity(): void
     {
         $response = new Response(
-            'place_123',
-            street: '123 Main Street',
-            latitude: '32.10391494',
-            longitude: '-96.3931030',
+            id: 'resp_123',
+            street: '123 Main St',
+            city: null,
         );
 
-        $this->assertTrue($response->hasStreet());
-        $this->assertTrue($response->hasCoordinates());
+        $this->assertNull($response->getCity());
+        $this->assertFalse($response->isValid());
+    }
+
+    public function testIsValidRequiresNonEmptyState(): void
+    {
+        $response = new Response(
+            id: 'resp_123',
+            street: '123 Main St',
+            city: 'Houston',
+            state: null,
+        );
+
+        $this->assertNull($response->getState());
+        $this->assertFalse($response->isValid());
+    }
+
+    public function testIsValidRequiresNonEmptyCountry(): void
+    {
+        $response = new Response(
+            id: 'resp_123',
+            street: '123 Main St',
+            city: 'Houston',
+            state: 'TX',
+            country: null,
+        );
+
+        $this->assertNull($response->getCountry());
+        $this->assertFalse($response->isValid());
+    }
+
+    public function testIsValidRequiresNonNullCoordinates(): void
+    {
+        $response = new Response(
+            id: 'resp_123',
+            street: '123 Main St',
+            city: 'Houston',
+            state: 'TX',
+            country: 'US',
+            latitude: null,
+            longitude: null,
+        );
+
+        $this->assertNull($response->getLatitude());
+        $this->assertNull($response->getLongitude());
+        $this->assertFalse($response->isValid());
+    }
+
+    public function testIsValidRequiresNonNullAccuracy(): void
+    {
+        $response = new Response(
+            id: 'resp_123',
+            street: '123 Main St',
+            city: 'Houston',
+            state: 'TX',
+            country: 'US',
+            latitude: '32.8761733',
+            longitude: '-97.1125216',
+            accuracy: null,
+        );
+
+        $this->assertNull($response->getAccuracy());
+        $this->assertFalse($response->isValid());
+    }
+
+    public function testIsValid(): void
+    {
+        $response = new Response(
+            id: 'resp_123',
+            street: '123 Main St',
+            city: 'Houston',
+            state: 'TX',
+            country: 'US',
+            latitude: '32.8761733',
+            longitude: '-97.1125216',
+            accuracy: 1,
+        );
+
+        $this->assertNotNull($response->getId());
+        $this->assertNotNull($response->getStreet());
+        $this->assertNotNull($response->getCity());
+        $this->assertNotNull($response->getState());
+        $this->assertNotNull($response->getCountry());
+        $this->assertNotNull($response->getHash());
+        $this->assertNotNull($response->getLatitude());
+        $this->assertNotNull($response->getLongitude());
+        $this->assertNotNull($response->getAccuracy());
         $this->assertTrue($response->isValid());
-    }
-
-    public function testIsFoundRequiresStreet(): void
-    {
-        $response = new Response('place_123', latitude: 32.10391494, longitude: -96.3931030);
-
-        $this->assertFalse($response->hasStreet());
-        $this->assertTrue($response->hasCoordinates());
-        $this->assertFalse($response->isValid());
-    }
-
-    public function testIsFoundRequiresCoordinates(): void
-    {
-        $response = new Response('place_123', street: '123 Main Street');
-
-        $this->assertTrue($response->hasStreet());
-        $this->assertFalse($response->hasCoordinates());
-        $this->assertFalse($response->isValid());
     }
 }

@@ -287,6 +287,7 @@ final readonly class Response
     }
 
     /**
+     * @phpstan-assert-if-true non-empty-string $this->id
      * @phpstan-assert-if-true non-empty-string $this->street
      * @phpstan-assert-if-true non-empty-string $this->city
      * @phpstan-assert-if-true non-empty-string $this->state
@@ -295,19 +296,21 @@ final readonly class Response
      * @phpstan-assert-if-true int|float|numeric-string $this->latitude
      * @phpstan-assert-if-true int|float|numeric-string $this->longitude
      * @phpstan-assert-if-true positive-int $this->accuracy
-     * @phpstan-assert-if-true int|float|numeric-string $this->getStreet()
-     * @phpstan-assert-if-true int|float|numeric-string $this->getCity()
-     * @phpstan-assert-if-true int|float|numeric-string $this->getState()
-     * @phpstan-assert-if-true int|float|numeric-string $this->getCountry()
-     * @phpstan-assert-if-true int|float|numeric-string $this->getHash()
+     * @phpstan-assert-if-true non-empty-string $this->getId()
+     * @phpstan-assert-if-true non-empty-string $this->getStreet()
+     * @phpstan-assert-if-true non-empty-string $this->getCity()
+     * @phpstan-assert-if-true non-empty-string $this->getState()
+     * @phpstan-assert-if-true non-empty-string $this->getCountry()
+     * @phpstan-assert-if-true non-empty-lowercase-string $this->getHash()
      * @phpstan-assert-if-true int|float|numeric-string $this->getLatitude()
      * @phpstan-assert-if-true int|float|numeric-string $this->getLongitude()
-     * @phpstan-assert-if-true int|float|numeric-string $this->getAccuracy()
+     * @phpstan-assert-if-true positive-int $this->getAccuracy()
      */
     public function isValid(): bool
     {
         return
-            null !== $this->getStreet()
+            null !== $this->getId()
+            && null !== $this->getStreet()
             && null !== $this->getCity()
             && null !== $this->getState()
             && null !== $this->getCountry()
