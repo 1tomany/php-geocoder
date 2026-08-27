@@ -289,33 +289,33 @@ final readonly class Response
 
     /**
      * @phpstan-assert-if-true non-empty-string $this->street
-     * @phpstan-assert-if-true non-empty-string $this->getStreet()
-     */
-    public function hasStreet(): bool
-    {
-        return null !== $this->getStreet();
-    }
-
-    /**
+     * @phpstan-assert-if-true non-empty-string $this->city
+     * @phpstan-assert-if-true non-empty-string $this->state
+     * @phpstan-assert-if-true non-empty-string $this->country
+     * @phpstan-assert-if-true non-empty-lowercase-string $this->hash
      * @phpstan-assert-if-true int|float|numeric-string $this->latitude
      * @phpstan-assert-if-true int|float|numeric-string $this->longitude
+     * @phpstan-assert-if-true positive-int $this->accuracy
+     * @phpstan-assert-if-true int|float|numeric-string $this->getStreet()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getCity()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getState()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getCountry()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getHash()
      * @phpstan-assert-if-true int|float|numeric-string $this->getLatitude()
      * @phpstan-assert-if-true int|float|numeric-string $this->getLongitude()
-     */
-    public function hasCoordinates(): bool
-    {
-        return is_numeric($this->latitude) && is_numeric($this->longitude);
-    }
-
-    /**
-     * @phpstan-assert-if-true non-empty-string $this->street
-     * @phpstan-assert-if-true int|float|numeric-string $this->latitude
-     * @phpstan-assert-if-true int|float|numeric-string $this->longitude
-     * @phpstan-assert-if-true int|float|numeric-string $this->getLatitude()
-     * @phpstan-assert-if-true int|float|numeric-string $this->getLongitude()
+     * @phpstan-assert-if-true int|float|numeric-string $this->getAccuracy()
      */
     public function isValid(): bool
     {
-        return $this->hasStreet() && $this->hasCoordinates();
+        return (
+            null !== $this->getStreet() &&
+            null !== $this->getCity() &&
+            null !== $this->getState() &&
+            null !== $this->getCountry() &&
+            null !== $this->getHash() &&
+            null !== $this->getLatitude() &&
+            null !== $this->getLongitude() &&
+            null !== $this->getAccuracy()
+        );
     }
 }
