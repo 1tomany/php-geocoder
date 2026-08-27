@@ -10,7 +10,6 @@ use function func_num_args;
 use function hash;
 use function implode;
 use function is_int;
-use function is_numeric;
 use function is_string;
 use function Symfony\Component\String\u;
 use function trim;
@@ -307,15 +306,15 @@ final readonly class Response
      */
     public function isValid(): bool
     {
-        return (
-            null !== $this->getStreet() &&
-            null !== $this->getCity() &&
-            null !== $this->getState() &&
-            null !== $this->getCountry() &&
-            null !== $this->getHash() &&
-            null !== $this->getLatitude() &&
-            null !== $this->getLongitude() &&
-            null !== $this->getAccuracy()
-        );
+        return
+            null !== $this->getStreet()
+            && null !== $this->getCity()
+            && null !== $this->getState()
+            && null !== $this->getCountry()
+            && null !== $this->getHash()
+            && null !== $this->getLatitude()
+            && null !== $this->getLongitude()
+            && null !== $this->getAccuracy()
+        ;
     }
 }
