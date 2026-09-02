@@ -31,6 +31,13 @@ final class GeocodingVendorNameValidatorTest extends TestCase
         new GeocodingVendorNameValidator()->validate(null, new GeocodingVendorName());
     }
 
+    public function testValidateIgnoresValuesOfTypeGeocodingVendor(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        new GeocodingVendorNameValidator()->validate(GeocodingVendor::Google, new GeocodingVendorName());
+    }
+
     public function testValidateRequiresValueToBeString(): void
     {
         $this->expectException(UnexpectedValueException::class);

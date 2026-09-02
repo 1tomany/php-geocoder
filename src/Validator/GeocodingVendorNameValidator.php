@@ -29,14 +29,16 @@ final class GeocodingVendorNameValidator extends ConstraintValidator
             return;
         }
 
-        if (!is_string($value)) {
-            throw new UnexpectedValueException($value, 'string');
-        }
+        if (!$value instanceof GeocodingVendor) {
+            if (!is_string($value)) {
+                throw new UnexpectedValueException($value, 'string');
+            }
 
-        try {
-            GeocodingVendor::create($value);
-        } catch (GeocoderExceptionInterface $e) {
-            $this->context->buildViolation($e->getMessage())->addViolation();
+            try {
+                GeocodingVendor::create($value);
+            } catch (GeocoderExceptionInterface $e) {
+                $this->context->buildViolation($e->getMessage())->addViolation();
+            }
         }
     }
 }
