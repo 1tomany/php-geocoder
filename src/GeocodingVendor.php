@@ -2,7 +2,7 @@
 
 namespace OneToMany\Geocoder;
 
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\Exception\DomainException;
 
 use function sprintf;
 use function strtolower;
@@ -14,7 +14,7 @@ enum GeocodingVendor: string
     case Mock = 'mock';
 
     /**
-     * @throws InvalidArgumentException when the geocoding vendor is not valid
+     * @throws DomainException when the geocoding vendor is not valid
      */
     public static function create(string|self $vendor): self
     {
@@ -26,7 +26,7 @@ enum GeocodingVendor: string
             try {
                 return self::from($vendor);
             } catch (\ValueError $e) {
-                throw new InvalidArgumentException(sprintf('The geocoding vendor "%s" is not valid.', $vendor), previous: $e);
+                throw new DomainException(sprintf('The geocoding vendor "%s" is not valid.', $vendor), previous: $e);
             }
         }
 
