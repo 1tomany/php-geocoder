@@ -50,13 +50,25 @@ final readonly class GoogleProvider implements ProviderInterface
     {
         $url = $this->url('geocode', 'address');
 
-        $query = array_filter([
+        $query = [
             'address.addressLines' => $request->line,
-            'address.locality' => $request->city,
-            'address.postalCode' => $request->zip,
-            'address.administrativeArea' => $request->state,
-            'address.regionCode' => $request->country,
-        ]);
+        ];
+
+        if (null !== $city = $request->city) {
+            $query['address.locality'] = $city;
+        }
+
+        if (null !== $zip = $request->zip) {
+            $query['address.postalCode'] = $zip;
+        }
+
+        if (null !== $state = $request->state) {
+            $query['address.administrativeArea'] = $state;
+        }
+
+        if (null !== $country = $request->country) {
+            $query['address.regionCode'] = $country;
+        }
 
         try {
             $response = $this->transport->getRequest($url, [
