@@ -11,7 +11,7 @@ use function sprintf;
 /**
  * @template T of ProviderInterface
  */
-final readonly class Registry
+final readonly class ProviderRegistry
 {
     /**
      * @var array<non-empty-lowercase-string, T>
