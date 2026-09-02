@@ -11,7 +11,6 @@ use OneToMany\Geocoder\Resource\FowardGeocode;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 
-use function array_filter;
 use function sprintf;
 
 final readonly class GoogleProvider implements ProviderInterface
