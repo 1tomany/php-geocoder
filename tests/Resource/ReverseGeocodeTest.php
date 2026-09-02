@@ -18,11 +18,11 @@ final class ReverseGeocodeTest extends TestCase
     {
         $faker = \Faker\Factory::create();
 
-        $latitude = $faker->latitude();
-        $latitude = sprintf('%.6f', $latitude);
+        $latitude = $faker->latitude(-90, 90);
+        $latitude = sprintf('%.7f', $latitude);
 
-        $longitude = $faker->longitude();
-        $longitude = sprintf('%.6f', $longitude);
+        $longitude = $faker->longitude(-180, 180);
+        $longitude = sprintf('%.7f', $longitude);
 
         $reverse = new ReverseGeocode($latitude, $longitude);
 
