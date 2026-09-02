@@ -28,9 +28,9 @@ use OneToMany\Geocoder\Bridge\Google\GoogleProvider;
 use OneToMany\Geocoder\Bridge\Mock\MockProvider;
 use OneToMany\Geocoder\Bridge\Transport;
 use OneToMany\Geocoder\GeocodingClient;
+use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Reverse;
-use OneToMany\Geocoder\Vendor;
 
 $transport = new Transport(
     createSymfonyHttpClient(),
@@ -48,7 +48,7 @@ $client = new GeocodingClient([
 ]);
 
 $response = $client->geocode(
-    Vendor::Google,
+    GeocodingVendor::Google,
     new Geocode(
         '123',
         'Main Street',
@@ -61,7 +61,7 @@ $response = $client->geocode(
 );
 
 $response = $client->reverse(
-    Vendor::Google,
+    GeocodingVendor::Google,
     new Reverse(
         '32.10391494',
         '-96.3931030',

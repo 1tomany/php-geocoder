@@ -13,6 +13,15 @@ use function array_map;
 #[Group('UnitTests')]
 final class GeocodingVendorTest extends TestCase
 {
+    public function testCreateTrimsAndLowercasesVendor(): void
+    {
+        $vendor = ' GOOGLE ';
+        $this->assertNull(GeocodingVendor::tryFrom($vendor)); // @phpstan-ignore method.alreadyNarrowedType
+
+        $geocodingVendor = GeocodingVendor::Google;
+        $this->assertSame($geocodingVendor, GeocodingVendor::create($vendor));
+    }
+
     #[DataProvider('providerGeocodingVendor')]
     public function testCreateReturnsSelf(GeocodingVendor $vendor): void
     {
