@@ -14,7 +14,7 @@ enum GeocodingVendor: string
     case Mock = 'mock';
 
     /**
-     * @throws InvalidArgumentException when the vendor is not valid
+     * @throws InvalidArgumentException when the geocoding vendor is not valid
      */
     public static function create(string|self $vendor): self
     {
@@ -26,7 +26,7 @@ enum GeocodingVendor: string
             try {
                 return self::from($vendor);
             } catch (\ValueError $e) {
-                throw new InvalidArgumentException(sprintf('The vendor "%s" is not valid.', $vendor), previous: $e);
+                throw new InvalidArgumentException(sprintf('The geocoding vendor "%s" is not valid.', $vendor), previous: $e);
             }
         }
 

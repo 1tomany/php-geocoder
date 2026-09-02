@@ -11,24 +11,28 @@ use PHPUnit\Framework\TestCase;
 use function array_map;
 
 #[Group('UnitTests')]
-final class VendorTest extends TestCase
+final class GeocodingVendorTest extends TestCase
 {
-    #[DataProvider('providerVendor')]
+    #[DataProvider('providerGeocodingVendor')]
     public function testCreateReturnsSelf(GeocodingVendor $vendor): void
     {
         $this->assertSame($vendor, GeocodingVendor::create($vendor));
     }
 
-    #[DataProvider('providerVendor')]
+    #[DataProvider('providerGeocodingVendor')]
     public function testCreateReturnsVendorFromValue(GeocodingVendor $vendor): void
     {
         $this->assertSame($vendor, GeocodingVendor::create($vendor->getValue()));
     }
 
     /**
-     * @return non-empty-list<array{Vendor}>
+     * @return non-empty-list<
+     *   array{
+     *     0: GeocodingVendor,
+     *   },
+     * >
      */
-    public static function providerVendor(): array
+    public static function providerGeocodingVendor(): array
     {
         return array_map(static fn (GeocodingVendor $vendor): array => [$vendor], GeocodingVendor::cases());
     }
@@ -38,7 +42,7 @@ final class VendorTest extends TestCase
         $vendor = 'invalid_vendor';
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessageIs('The vendor "'.$vendor.'" is not valid.');
+        $this->expectExceptionMessageIs('The geocoding vendor "'.$vendor.'" is not valid.');
 
         GeocodingVendor::create($vendor);
     }
@@ -54,7 +58,13 @@ final class VendorTest extends TestCase
     }
 
     /**
-     * @return non-empty-list<array{Vendor, non-empty-string, non-empty-lowercase-string}>
+     * @return non-empty-list<
+     *   array{
+     *     0: GeocodingVendor,
+     *     1: non-empty-string,
+     *     2: non-empty-lowercase-string,
+     *   },
+     * >
      */
     public static function providerNameAndValue(): array
     {
