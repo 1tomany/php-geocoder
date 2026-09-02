@@ -5,23 +5,23 @@ namespace OneToMany\Geocoder;
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Contract\GeocodingClientInterface;
 use OneToMany\Geocoder\Resource\ForwardGeocode;
-use OneToMany\Geocoder\Resource\Registry;
+use OneToMany\Geocoder\Resource\ProviderRegistry;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\ReverseGeocode;
 
 final readonly class GeocodingClient implements GeocodingClientInterface
 {
     /**
-     * @var Registry<ProviderInterface>
+     * @var ProviderRegistry<ProviderInterface>
      */
-    private Registry $providers;
+    private ProviderRegistry $providers;
 
     /**
      * @param iterable<ProviderInterface> $providers
      */
     public function __construct(iterable $providers)
     {
-        $this->providers = new Registry($providers);
+        $this->providers = new ProviderRegistry($providers);
     }
 
     /**
