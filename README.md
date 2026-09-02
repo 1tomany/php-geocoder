@@ -27,7 +27,7 @@ A [Symfony bundle](https://github.com/1tomany/php-geocoder-bundle) is available 
 use OneToMany\Geocoder\Bridge\Google\GoogleProvider;
 use OneToMany\Geocoder\Bridge\Mock\MockProvider;
 use OneToMany\Geocoder\Bridge\Transport;
-use OneToMany\Geocoder\GeocoderClient;
+use OneToMany\Geocoder\GeocodingClient;
 use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Reverse;
 use OneToMany\Geocoder\Vendor;
@@ -39,7 +39,7 @@ $transport = new Transport(
 
 $googleApiKey = getenv('GOOGLE_API_KEY');
 
-$geocoderClient = new GeocoderClient([
+$geocoderClient = new GeocodingClient([
     new GoogleProvider(
         transport: $transport,
         apiKey: $googleApiKey,
