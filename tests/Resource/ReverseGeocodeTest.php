@@ -36,7 +36,7 @@ final class ReverseGeocodeTest extends TestCase
         $this->assertLessThan(-90.0, $latitude);
 
         $this->expectException(RangeException::class);
-        $this->expectExceptionMessageIs('The latitude must be greater than or equal to -90.0 or less than or equal to 90.0.');
+        $this->expectExceptionMessageIs('The latitude must be greater than or equal to -90 or less than or equal to 90.');
 
         new ReverseGeocode($latitude, $faker->longitude());
     }
@@ -47,5 +47,18 @@ final class ReverseGeocodeTest extends TestCase
         $this->expectExceptionMessageIs('The longitude must be a numeric value.');
 
         new ReverseGeocode(32.10391494, 'invalid');
+    }
+
+    public function testConstructorRequiresValidLongitude(): void
+    {
+        $faker = \Faker\Factory::create();
+
+        $longitude = $faker->longitude(-360, -181);
+        $this->assertLessThan(-180.0, $longitude);
+
+        $this->expectException(RangeException::class);
+        $this->expectExceptionMessageIs('The longitude must be greater than or equal to -180 or less than or equal to 180.');
+
+        new ReverseGeocode($faker->latitude(), $longitude);
     }
 }

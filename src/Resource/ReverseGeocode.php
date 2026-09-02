@@ -33,18 +33,18 @@ final readonly class ReverseGeocode
             throw new DomainException('The latitude must be a numeric value.');
         }
 
-        if ((float) $latitude < -90.0 || (float) $latitude > 90.0) {
-            throw new RangeException('The latitude must be greater than or equal to -90.0 or less than or equal to 90.0.');
-        }
-
         $this->latitude = $latitude;
+
+        if (\floor($this->latitude) < -90 || \ceil($latitude) > 90) {
+            throw new RangeException('The latitude must be greater than or equal to -90 or less than or equal to 90.');
+        }
 
         if (!is_numeric($longitude)) {
             throw new DomainException('The longitude must be a numeric value.');
         }
 
         if ((float) $longitude < -180.0 || (float) $longitude > 180.0) {
-            throw new RangeException('The longitude must be greater than or equal to -180.0 or less than or equal to 180.0.');
+            throw new RangeException('The longitude must be greater than or equal to -180 or less than or equal to 180.');
         }
 
         $this->longitude = $longitude;
