@@ -3,7 +3,9 @@
 namespace OneToMany\Geocoder\Resource;
 
 use OneToMany\Geocoder\Exception\DomainException;
+use OneToMany\Geocoder\Exception\RuntimeException;
 
+use function is_int;
 use function is_string;
 use function trim;
 use function vsprintf;
@@ -49,10 +51,16 @@ final class FowardGeocode
         }
     }
 
+    /**
+     * @var non-empty-string
+     */
     public string $line {
         get => $this->createLine();
     }
 
+    /**
+     * @return non-empty-string
+     */
     private function createLine(): string
     {
         $line = vsprintf('%s %s %s', [
@@ -61,6 +69,10 @@ final class FowardGeocode
             trim((string) $this->unit),
         ]);
 
-        return trim($line);
+        if ('' === $line = trim($line)) {
+            throw new RuntimeException('An empty line was created.');
+        }
+
+        return $line;
     }
 }
