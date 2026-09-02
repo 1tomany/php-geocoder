@@ -3,7 +3,7 @@
 namespace OneToMany\Geocoder\Resource;
 
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\GeocodingVendor;
 
 use function sprintf;
@@ -21,7 +21,7 @@ final readonly class Registry
     /**
      * @param iterable<T> $providers
      *
-     * @throws InvalidArgumentException when a provider is already registered
+     * @throws DomainException when a provider is already registered
      */
     public function __construct(iterable $providers)
     {
@@ -29,7 +29,7 @@ final readonly class Registry
 
         foreach ($providers as $provider) {
             if (isset($indexedProviders[$provider::getVendor()->getValue()])) {
-                throw new InvalidArgumentException(sprintf('The "%s" provider is already registered.', $provider::getVendor()->getValue()));
+                throw new DomainException(sprintf('The "%s" provider is already registered.', $provider::getVendor()->getValue()));
             }
 
             $indexedProviders[$provider::getVendor()->getValue()] = $provider;
@@ -41,12 +41,12 @@ final readonly class Registry
     /**
      * @return T
      *
-     * @throws InvalidArgumentException when a provider is not registered
+     * @throws DomainException when a provider is not registered
      */
     public function get(GeocodingVendor $vendor): ProviderInterface
     {
         if (!isset($this->providers[$vendor->getValue()])) {
-            throw new InvalidArgumentException(sprintf('The "%s" provider is not registered.', $vendor->getValue()));
+            throw new DomainException(sprintf('The "%s" provider is not registered.', $vendor->getValue()));
         }
 
         return $this->providers[$vendor->getValue()];

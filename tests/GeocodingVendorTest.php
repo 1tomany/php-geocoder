@@ -2,7 +2,7 @@
 
 namespace OneToMany\Geocoder\Tests;
 
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\GeocodingVendor;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -50,7 +50,7 @@ final class GeocodingVendorTest extends TestCase
     {
         $vendor = 'invalid_vendor';
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('The geocoding vendor "'.$vendor.'" is not valid.');
 
         GeocodingVendor::create($vendor);

@@ -2,7 +2,7 @@
 
 namespace OneToMany\Geocoder\Resource;
 
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\Exception\DomainException;
 
 use function is_string;
 use function trim;
@@ -21,7 +21,7 @@ final class Geocode
     public readonly ?string $street;
 
     /**
-     * @throws InvalidArgumentException when the number and street are empty
+     * @throws DomainException when the number and street are empty
      */
     public function __construct(
         int|string|null $number,
@@ -45,7 +45,7 @@ final class Geocode
         $this->street = '' !== $street ? $street : null;
 
         if (null === $this->number && null === $this->street) {
-            throw new InvalidArgumentException('Both the number and street cannot be empty.');
+            throw new DomainException('Both the number and street cannot be empty.');
         }
     }
 

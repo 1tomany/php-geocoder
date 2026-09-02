@@ -2,7 +2,7 @@
 
 namespace OneToMany\Geocoder\Tests\Resource;
 
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\Resource\Reverse;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,7 @@ final class ReverseTest extends TestCase
 
     public function testConstructorRequiresNumericLatitude(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('The latitude must be a numeric value.');
 
         new Reverse('invalid', -96.3931030);
@@ -29,7 +29,7 @@ final class ReverseTest extends TestCase
 
     public function testConstructorRequiresNumericLongitude(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('The longitude must be a numeric value.');
 
         new Reverse(32.10391494, 'invalid');

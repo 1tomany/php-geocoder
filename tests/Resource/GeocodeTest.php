@@ -2,7 +2,7 @@
 
 namespace OneToMany\Geocoder\Tests\Resource;
 
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\Resource\Geocode;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -17,7 +17,7 @@ final class GeocodeTest extends TestCase
         ?string $number,
         ?string $street,
     ): void {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('Both the number and street cannot be empty.');
 
         new Geocode($number, $street);

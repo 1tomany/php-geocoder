@@ -3,7 +3,7 @@
 namespace OneToMany\Geocoder\Tests\Resource;
 
 use OneToMany\Geocoder\Bridge\Mock\MockProvider;
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\Registry;
 use PHPUnit\Framework\Attributes\Group;
@@ -28,7 +28,7 @@ final class RegistryTest extends TestCase
     {
         $mockProvider = new MockProvider();
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('The "'.$mockProvider->getVendor()->getValue().'" provider is already registered.');
 
         new Registry([$mockProvider, $mockProvider]);
@@ -45,7 +45,7 @@ final class RegistryTest extends TestCase
         $vendor = GeocodingVendor::Google;
         $this->assertNotSame($vendor, $mockProvider->getVendor());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('The "'.$vendor->getValue().'" provider is not registered.');
 
         $registry->get($vendor);

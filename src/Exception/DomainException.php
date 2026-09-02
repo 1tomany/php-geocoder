@@ -4,6 +4,6 @@ namespace OneToMany\Geocoder\Exception;
 
 use OneToMany\Geocoder\Contract\Exception\ExceptionInterface;
 
-final class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
+class DomainException extends \DomainException implements ExceptionInterface
 {
 }

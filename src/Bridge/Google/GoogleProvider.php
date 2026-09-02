@@ -5,7 +5,7 @@ namespace OneToMany\Geocoder\Bridge\Google;
 use OneToMany\Geocoder\Bridge\Google\Response\Geocode\Results;
 use OneToMany\Geocoder\Bridge\Transport;
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
-use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Response;
@@ -21,7 +21,7 @@ final readonly class GoogleProvider implements ProviderInterface
     /**
      * @param non-empty-string $apiVersion
      *
-     * @throws InvalidArgumentException when the API key is empty
+     * @throws DomainException when the API key is empty
      */
     public function __construct(
         private Transport $transport,
@@ -29,7 +29,7 @@ final readonly class GoogleProvider implements ProviderInterface
         private string $apiVersion = 'v4',
     ) {
         if ('' === $this->apiKey) {
-            throw new InvalidArgumentException(sprintf('The %s API key cannot be empty.', self::getVendor()->getName()));
+            throw new DomainException(sprintf('The %s API key cannot be empty.', self::getVendor()->getName()));
         }
     }
 
