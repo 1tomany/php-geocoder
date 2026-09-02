@@ -13,5 +13,5 @@ interface ProviderInterface
 
     public function forward(FowardGeocode $request): Response;
 
-    public function reverse(ReverseGeocode $reverse): Response;
+    public function reverse(ReverseGeocode $request): Response;
 }

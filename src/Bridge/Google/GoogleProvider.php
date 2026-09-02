@@ -91,13 +91,13 @@ final readonly class GoogleProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public function reverse(ReverseGeocode $reverse): Response
+    public function reverse(ReverseGeocode $request): Response
     {
         $url = $this->url('geocode', 'location');
 
         $query = [
-            'location.latitude' => $reverse->latitude,
-            'location.longitude' => $reverse->longitude,
+            'location.latitude' => $request->latitude,
+            'location.longitude' => $request->longitude,
         ];
 
         try {
