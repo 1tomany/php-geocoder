@@ -5,8 +5,10 @@ namespace OneToMany\Geocoder;
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
 
 use function sprintf;
+use function strtolower;
+use function trim;
 
-enum Vendor: string
+enum GeocodingVendor: string
 {
     case Google = 'google';
     case Mock = 'mock';
@@ -17,6 +19,10 @@ enum Vendor: string
     public static function create(string|self $vendor): self
     {
         if (!$vendor instanceof self) {
+            if ($vendor = trim($vendor)) {
+                $vendor = strtolower($vendor);
+            }
+
             try {
                 return self::from($vendor);
             } catch (\ValueError $e) {

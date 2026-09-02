@@ -3,7 +3,7 @@
 namespace OneToMany\Geocoder\Tests;
 
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
-use OneToMany\Geocoder\Vendor;
+use OneToMany\Geocoder\GeocodingVendor;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -14,15 +14,15 @@ use function array_map;
 final class VendorTest extends TestCase
 {
     #[DataProvider('providerVendor')]
-    public function testCreateReturnsSelf(Vendor $vendor): void
+    public function testCreateReturnsSelf(GeocodingVendor $vendor): void
     {
-        $this->assertSame($vendor, Vendor::create($vendor));
+        $this->assertSame($vendor, GeocodingVendor::create($vendor));
     }
 
     #[DataProvider('providerVendor')]
-    public function testCreateReturnsVendorFromValue(Vendor $vendor): void
+    public function testCreateReturnsVendorFromValue(GeocodingVendor $vendor): void
     {
-        $this->assertSame($vendor, Vendor::create($vendor->getValue()));
+        $this->assertSame($vendor, GeocodingVendor::create($vendor->getValue()));
     }
 
     /**
@@ -30,7 +30,7 @@ final class VendorTest extends TestCase
      */
     public static function providerVendor(): array
     {
-        return array_map(static fn (Vendor $vendor): array => [$vendor], Vendor::cases());
+        return array_map(static fn (GeocodingVendor $vendor): array => [$vendor], GeocodingVendor::cases());
     }
 
     public function testCreateRequiresValidVendor(): void
@@ -40,12 +40,12 @@ final class VendorTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageIs('The vendor "'.$vendor.'" is not valid.');
 
-        Vendor::create($vendor);
+        GeocodingVendor::create($vendor);
     }
 
     #[DataProvider('providerNameAndValue')]
     public function testGettingNameAndValue(
-        Vendor $vendor,
+        GeocodingVendor $vendor,
         string $name,
         string $value,
     ): void {
@@ -58,20 +58,20 @@ final class VendorTest extends TestCase
      */
     public static function providerNameAndValue(): array
     {
-        $mapper = static function (Vendor $vendor): array {
+        $mapper = static function (GeocodingVendor $vendor): array {
             return [$vendor, $vendor->getName(), $vendor->getValue()];
         };
 
-        return array_map($mapper, Vendor::cases());
+        return array_map($mapper, GeocodingVendor::cases());
     }
 
     public function testIsGoogle(): void
     {
-        $this->assertTrue(Vendor::Google->isGoogle()); // @phpstan-ignore method.alreadyNarrowedType
+        $this->assertTrue(GeocodingVendor::Google->isGoogle()); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     public function testIsMock(): void
     {
-        $this->assertTrue(Vendor::Mock->isMock()); // @phpstan-ignore method.alreadyNarrowedType
+        $this->assertTrue(GeocodingVendor::Mock->isMock()); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

@@ -3,10 +3,10 @@
 namespace OneToMany\Geocoder\Bridge\Mock;
 
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
+use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
-use OneToMany\Geocoder\Vendor;
 
 use function array_rand;
 use function bin2hex;
@@ -32,9 +32,9 @@ final readonly class MockProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public static function getVendor(): Vendor
+    public static function getVendor(): GeocodingVendor
     {
-        return Vendor::Mock;
+        return GeocodingVendor::Mock;
     }
 
     /**
