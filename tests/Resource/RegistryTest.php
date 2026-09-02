@@ -4,8 +4,8 @@ namespace OneToMany\Geocoder\Tests\Resource;
 
 use OneToMany\Geocoder\Bridge\Mock\MockProvider;
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\Registry;
-use OneToMany\Geocoder\Vendor;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +21,7 @@ final class RegistryTest extends TestCase
             $mockProvider,
         ]);
 
-        $this->assertSame($mockProvider, $registry->get(Vendor::Mock));
+        $this->assertSame($mockProvider, $registry->get(GeocodingVendor::Mock));
     }
 
     public function testConstructorRequiresUniqueProvider(): void
@@ -42,7 +42,7 @@ final class RegistryTest extends TestCase
             $mockProvider,
         ]);
 
-        $vendor = Vendor::Google;
+        $vendor = GeocodingVendor::Google;
         $this->assertNotSame($vendor, $mockProvider->getVendor());
 
         $this->expectException(InvalidArgumentException::class);

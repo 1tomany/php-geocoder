@@ -4,7 +4,7 @@ namespace OneToMany\Geocoder\Resource;
 
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
-use OneToMany\Geocoder\Vendor;
+use OneToMany\Geocoder\GeocodingVendor;
 
 use function sprintf;
 
@@ -43,7 +43,7 @@ final readonly class Registry
      *
      * @throws InvalidArgumentException when a provider is not registered
      */
-    public function get(Vendor $vendor): ProviderInterface
+    public function get(GeocodingVendor $vendor): ProviderInterface
     {
         if (!isset($this->providers[$vendor->getValue()])) {
             throw new InvalidArgumentException(sprintf('The "%s" provider is not registered.', $vendor->getValue()));

@@ -6,10 +6,10 @@ use OneToMany\Geocoder\Bridge\Google\Response\Geocode\Results;
 use OneToMany\Geocoder\Bridge\Transport;
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Exception\InvalidArgumentException;
+use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
-use OneToMany\Geocoder\Vendor;
 
 use function array_filter;
 use function sprintf;
@@ -37,9 +37,9 @@ final readonly class GoogleProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public static function getVendor(): Vendor
+    public static function getVendor(): GeocodingVendor
     {
-        return Vendor::Google;
+        return GeocodingVendor::Google;
     }
 
     /**

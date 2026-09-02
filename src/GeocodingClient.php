@@ -28,17 +28,17 @@ final readonly class GeocodingClient implements GeocodingClientInterface
      * @see OneToMany\Geocoder\Contract\GeocodingClientInterface
      */
     #[\Override]
-    public function geocode(string|Vendor $vendor, Geocode $geocode): Response
+    public function geocode(string|GeocodingVendor $vendor, Geocode $geocode): Response
     {
-        return $this->providers->get(Vendor::create($vendor))->geocode($geocode);
+        return $this->providers->get(GeocodingVendor::create($vendor))->geocode($geocode);
     }
 
     /**
      * @see OneToMany\Geocoder\Contract\GeocodingClientInterface
      */
     #[\Override]
-    public function reverse(string|Vendor $vendor, Reverse $reverse): Response
+    public function reverse(string|GeocodingVendor $vendor, Reverse $reverse): Response
     {
-        return $this->providers->get(Vendor::create($vendor))->reverse($reverse);
+        return $this->providers->get(GeocodingVendor::create($vendor))->reverse($reverse);
     }
 }
