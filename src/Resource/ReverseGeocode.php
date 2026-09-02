@@ -5,6 +5,8 @@ namespace OneToMany\Geocoder\Resource;
 use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\Exception\RangeException;
 
+use function ceil;
+use function floor;
 use function is_numeric;
 
 final readonly class ReverseGeocode
@@ -33,17 +35,17 @@ final readonly class ReverseGeocode
             throw new DomainException('The latitude must be a numeric value.');
         }
 
-        $this->latitude = $latitude;
-
-        if (\floor($this->latitude) < -90 || \ceil($latitude) > 90) {
+        if (floor((float) $latitude) < -90 || ceil((float) $latitude) > 90) {
             throw new RangeException('The latitude must be greater than or equal to -90 or less than or equal to 90.');
         }
+
+        $this->latitude = $latitude;
 
         if (!is_numeric($longitude)) {
             throw new DomainException('The longitude must be a numeric value.');
         }
 
-        if ((float) $longitude < -180.0 || (float) $longitude > 180.0) {
+        if (floor((float) $longitude) < -180 || ceil((float) $longitude) > 180) {
             throw new RangeException('The longitude must be greater than or equal to -180 or less than or equal to 180.');
         }
 
