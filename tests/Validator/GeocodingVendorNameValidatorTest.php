@@ -11,6 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
+use function array_rand;
+
 #[Group('ValidatorTests')]
 final class GeocodingVendorNameValidatorTest extends TestCase
 {
@@ -42,7 +44,7 @@ final class GeocodingVendorNameValidatorTest extends TestCase
         $this->expectNotToPerformAssertions();
 
         $vendor = GeocodingVendor::cases()[
-            \array_rand(GeocodingVendor::cases())
+            array_rand(GeocodingVendor::cases())
         ];
 
         new GeocodingVendorNameValidator()->validate($vendor->value, new GeocodingVendorName());
