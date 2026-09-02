@@ -7,7 +7,7 @@ use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 use OneToMany\Geocoder\Vendor;
 
-interface GeocoderClientInterface
+interface GeocodingClientInterface
 {
     public function geocode(string|Vendor $vendor, Geocode $geocode): Response;
 
