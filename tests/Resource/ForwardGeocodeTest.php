@@ -3,7 +3,7 @@
 namespace OneToMany\Geocoder\Tests\Resource;
 
 use OneToMany\Geocoder\Exception\DomainException;
-use OneToMany\Geocoder\Resource\FowardGeocode;
+use OneToMany\Geocoder\Resource\ForwardGeocode;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +20,7 @@ final class ForwardGeocodeTest extends TestCase
         $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('Both the number and street cannot be empty.');
 
-        new FowardGeocode($number, $street);
+        new ForwardGeocode($number, $street);
     }
 
     /**
@@ -42,7 +42,7 @@ final class ForwardGeocodeTest extends TestCase
 
     public function testConstructorTrimsStreet(): void
     {
-        $this->assertSame('Main Street', new FowardGeocode('123  ', '   Main Street  ')->street);
+        $this->assertSame('Main Street', new ForwardGeocode('123  ', '   Main Street  ')->street);
     }
 
     #[DataProvider('providerNumberStreetAndLine')]
@@ -51,7 +51,7 @@ final class ForwardGeocodeTest extends TestCase
         ?string $street,
         string $line,
     ): void {
-        $this->assertSame($line, new FowardGeocode($number, $street)->line);
+        $this->assertSame($line, new ForwardGeocode($number, $street)->line);
     }
 
     /**
@@ -73,11 +73,11 @@ final class ForwardGeocodeTest extends TestCase
 
     public function testLineCombinesStreetAndUnit(): void
     {
-        $this->assertSame('123 Main Street Suite 100', new FowardGeocode(null, '123 Main Street', 'Suite 100')->line);
+        $this->assertSame('123 Main Street Suite 100', new ForwardGeocode(null, '123 Main Street', 'Suite 100')->line);
     }
 
     public function testLineDoesNotIncludeTrailingWhitespaceWithoutUnit(): void
     {
-        $this->assertSame('123 Main Street', new FowardGeocode('123', 'Main Street   ')->line);
+        $this->assertSame('123 Main Street', new ForwardGeocode('123', 'Main Street   ')->line);
     }
 }

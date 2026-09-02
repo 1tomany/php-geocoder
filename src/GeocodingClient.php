@@ -4,7 +4,7 @@ namespace OneToMany\Geocoder;
 
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Contract\GeocodingClientInterface;
-use OneToMany\Geocoder\Resource\FowardGeocode;
+use OneToMany\Geocoder\Resource\ForwardGeocode;
 use OneToMany\Geocoder\Resource\Registry;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\ReverseGeocode;
@@ -28,7 +28,7 @@ final readonly class GeocodingClient implements GeocodingClientInterface
      * @see OneToMany\Geocoder\Contract\GeocodingClientInterface
      */
     #[\Override]
-    public function forward(string|GeocodingVendor $vendor, FowardGeocode $request): Response
+    public function forward(string|GeocodingVendor $vendor, ForwardGeocode $request): Response
     {
         return $this->providers->get(GeocodingVendor::create($vendor))->forward($request);
     }

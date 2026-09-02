@@ -3,15 +3,15 @@
 namespace OneToMany\Geocoder\Contract;
 
 use OneToMany\Geocoder\GeocodingVendor;
-use OneToMany\Geocoder\Resource\FowardGeocode;
+use OneToMany\Geocoder\Resource\ForwardGeocode;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\ReverseGeocode;
 
 interface GeocodingClientInterface
 {
-    public function forward(string|GeocodingVendor $vendor, FowardGeocode $request): Response;
+    public function forward(string|GeocodingVendor $vendor, ForwardGeocode $request): Response;
 
     public function reverse(string|GeocodingVendor $vendor, ReverseGeocode $request): Response;
 
-    public function request(string|GeocodingVendor $vendor, FowardGeocode|ReverseGeocode $request): Response;
+    public function request(string|GeocodingVendor $vendor, ForwardGeocode|ReverseGeocode $request): Response;
 }
