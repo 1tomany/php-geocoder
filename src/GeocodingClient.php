@@ -30,7 +30,7 @@ final readonly class GeocodingClient implements GeocodingClientInterface
     #[\Override]
     public function forward(string|GeocodingVendor $vendor, FowardGeocode $request): Response
     {
-        return $this->providers->get(GeocodingVendor::create($vendor))->geocode($request);
+        return $this->providers->get(GeocodingVendor::create($vendor))->forward($request);
     }
 
     /**

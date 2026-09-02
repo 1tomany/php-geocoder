@@ -46,7 +46,7 @@ final readonly class GoogleProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public function geocode(FowardGeocode $request): Response
+    public function forward(FowardGeocode $request): Response
     {
         $url = $this->url('geocode', 'address');
 
