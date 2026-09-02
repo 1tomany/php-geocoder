@@ -8,7 +8,7 @@ use function is_string;
 use function trim;
 use function vsprintf;
 
-final class Geocode
+final class FowardGeocode
 {
     /**
      * @var ?non-empty-string
