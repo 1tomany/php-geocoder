@@ -7,18 +7,19 @@ use OneToMany\Geocoder\Bridge\Transport;
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\GeocodingVendor;
-use OneToMany\Geocoder\Resource\Geocode;
+use OneToMany\Geocoder\Resource\FowardGeocode;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 
-use function array_filter;
 use function sprintf;
+use function trim;
 
 final readonly class GoogleProvider implements ProviderInterface
 {
     public const string BASE_URL = 'https://geocode.googleapis.com';
 
     /**
+     * @param non-empty-string $apiKey
      * @param non-empty-string $apiVersion
      *
      * @throws DomainException when the API key is empty
@@ -28,7 +29,7 @@ final readonly class GoogleProvider implements ProviderInterface
         #[\SensitiveParameter] private string $apiKey,
         private string $apiVersion = 'v4',
     ) {
-        if ('' === $this->apiKey) {
+        if ('' === trim($this->apiKey)) {
             throw new DomainException(sprintf('The %s API key cannot be empty.', self::getVendor()->getName()));
         }
     }
@@ -46,17 +47,29 @@ final readonly class GoogleProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public function geocode(Geocode $geocode): Response
+    public function forward(FowardGeocode $request): Response
     {
         $url = $this->url('geocode', 'address');
 
-        $query = array_filter([
-            'address.addressLines' => $geocode->line,
-            'address.locality' => $geocode->city,
-            'address.postalCode' => $geocode->zip,
-            'address.administrativeArea' => $geocode->state,
-            'address.regionCode' => $geocode->country,
-        ]);
+        $query = [
+            'address.addressLines' => $request->line,
+        ];
+
+        if (null !== $city = $request->city) {
+            $query['address.locality'] = $city;
+        }
+
+        if (null !== $zip = $request->zip) {
+            $query['address.postalCode'] = $zip;
+        }
+
+        if (null !== $state = $request->state) {
+            $query['address.administrativeArea'] = $state;
+        }
+
+        if (null !== $country = $request->country) {
+            $query['address.regionCode'] = $country;
+        }
 
         try {
             $response = $this->transport->getRequest($url, [

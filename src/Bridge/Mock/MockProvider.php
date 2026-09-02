@@ -4,7 +4,7 @@ namespace OneToMany\Geocoder\Bridge\Mock;
 
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\GeocodingVendor;
-use OneToMany\Geocoder\Resource\Geocode;
+use OneToMany\Geocoder\Resource\FowardGeocode;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 
@@ -41,17 +41,17 @@ final readonly class MockProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public function geocode(Geocode $geocode): Response
+    public function forward(FowardGeocode $request): Response
     {
         return new Response(
             $this->generateId('place'),
             null,
-            $geocode->street,
-            $geocode->unit,
-            $geocode->city,
-            $geocode->zip,
-            $geocode->state,
-            $geocode->country,
+            $request->street,
+            $request->unit,
+            $request->city,
+            $request->zip,
+            $request->state,
+            $request->country,
             $this->faker->latitude(),
             $this->faker->longitude(),
             $this->getGranularity(),

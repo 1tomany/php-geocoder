@@ -3,14 +3,14 @@
 namespace OneToMany\Geocoder\Tests\Resource;
 
 use OneToMany\Geocoder\Exception\DomainException;
-use OneToMany\Geocoder\Resource\Geocode;
+use OneToMany\Geocoder\Resource\FowardGeocode;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 #[Group('UnitTests')]
 #[Group('ResourceTests')]
-final class GeocodeTest extends TestCase
+final class ForwardGeocodeTest extends TestCase
 {
     #[DataProvider('providerEmptyNumberAndStreet')]
     public function testConstructorRequiresNonEmptyNumberAndStreet(
@@ -20,7 +20,7 @@ final class GeocodeTest extends TestCase
         $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('Both the number and street cannot be empty.');
 
-        new Geocode($number, $street);
+        new FowardGeocode($number, $street);
     }
 
     /**
@@ -42,7 +42,7 @@ final class GeocodeTest extends TestCase
 
     public function testConstructorTrimsStreet(): void
     {
-        $this->assertSame('Main Street', new Geocode('123  ', '   Main Street  ')->street);
+        $this->assertSame('Main Street', new FowardGeocode('123  ', '   Main Street  ')->street);
     }
 
     #[DataProvider('providerNumberStreetAndLine')]
@@ -51,7 +51,7 @@ final class GeocodeTest extends TestCase
         ?string $street,
         string $line,
     ): void {
-        $this->assertSame($line, new Geocode($number, $street)->line);
+        $this->assertSame($line, new FowardGeocode($number, $street)->line);
     }
 
     /**
@@ -73,11 +73,11 @@ final class GeocodeTest extends TestCase
 
     public function testLineCombinesStreetAndUnit(): void
     {
-        $this->assertSame('123 Main Street Suite 100', new Geocode(null, '123 Main Street', 'Suite 100')->line);
+        $this->assertSame('123 Main Street Suite 100', new FowardGeocode(null, '123 Main Street', 'Suite 100')->line);
     }
 
     public function testLineDoesNotIncludeTrailingWhitespaceWithoutUnit(): void
     {
-        $this->assertSame('123 Main Street', new Geocode('123', 'Main Street   ')->line);
+        $this->assertSame('123 Main Street', new FowardGeocode('123', 'Main Street   ')->line);
     }
 }
