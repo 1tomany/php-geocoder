@@ -30,7 +30,7 @@ use OneToMany\Geocoder\Bridge\Transport;
 use OneToMany\Geocoder\GeocodingClient;
 use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\ForwardGeocode;
-use OneToMany\Geocoder\Resource\Reverse;
+use OneToMany\Geocoder\Resource\ReverseGeocode;
 
 $transport = new Transport(
     createSymfonyHttpClient(),
@@ -62,7 +62,7 @@ $response = $client->forward(
 
 $response = $client->reverse(
     GeocodingVendor::Google,
-    new Reverse(
+    new ReverseGeocode(
         '32.10391494',
         '-96.3931030',
     ),
