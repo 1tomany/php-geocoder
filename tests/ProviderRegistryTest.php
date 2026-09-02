@@ -10,7 +10,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 #[Group('UnitTests')]
-#[Group('ResourceTests')]
 final class ProviderRegistryTest extends TestCase
 {
     public function testGetReturnsRegisteredProvider(): void
