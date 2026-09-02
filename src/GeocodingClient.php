@@ -3,13 +3,13 @@
 namespace OneToMany\Geocoder;
 
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
-use OneToMany\Geocoder\Contract\GeocoderClientInterface;
+use OneToMany\Geocoder\Contract\GeocodingClientInterface;
 use OneToMany\Geocoder\Resource\Geocode;
 use OneToMany\Geocoder\Resource\Registry;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 
-final readonly class GeocodingClient implements GeocoderClientInterface
+final readonly class GeocodingClient implements GeocodingClientInterface
 {
     /**
      * @var Registry<ProviderInterface>
@@ -25,7 +25,7 @@ final readonly class GeocodingClient implements GeocoderClientInterface
     }
 
     /**
-     * @see OneToMany\Geocoder\Contract\GeocoderClientInterface
+     * @see OneToMany\Geocoder\Contract\GeocodingClientInterface
      */
     #[\Override]
     public function geocode(string|Vendor $vendor, Geocode $geocode): Response
@@ -34,7 +34,7 @@ final readonly class GeocodingClient implements GeocoderClientInterface
     }
 
     /**
-     * @see OneToMany\Geocoder\Contract\GeocoderClientInterface
+     * @see OneToMany\Geocoder\Contract\GeocodingClientInterface
      */
     #[\Override]
     public function reverse(string|Vendor $vendor, Reverse $reverse): Response
