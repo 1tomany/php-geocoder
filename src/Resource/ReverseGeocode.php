@@ -23,9 +23,9 @@ final readonly class ReverseGeocode
 
     /**
      * @throws DomainException when the latitude is not a numeric value
-     * @throws RangeException when the latitude is less than -90.0 or greater than 90.0
+     * @throws RangeException when the latitude is less than -90 or greater than 90
      * @throws DomainException when the longitude is not a numeric value
-     * @throws RangeException when the longitude is less than -180.0 or greater than 180.0
+     * @throws RangeException when the longitude is less than -180 or greater than 180
      */
     public function __construct(
         int|float|string $latitude,
