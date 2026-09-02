@@ -12,6 +12,7 @@ use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 
 use function sprintf;
+use function trim;
 
 final readonly class GoogleProvider implements ProviderInterface
 {
@@ -28,7 +29,7 @@ final readonly class GoogleProvider implements ProviderInterface
         #[\SensitiveParameter] private string $apiKey,
         private string $apiVersion = 'v4',
     ) {
-        if ('' === \trim($this->apiKey)) {
+        if ('' === trim($this->apiKey)) {
             throw new DomainException(sprintf('The %s API key cannot be empty.', self::getVendor()->getName()));
         }
     }
