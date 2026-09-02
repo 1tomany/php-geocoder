@@ -9,7 +9,7 @@ use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\FowardGeocode;
 use OneToMany\Geocoder\Resource\Response;
-use OneToMany\Geocoder\Resource\Reverse;
+use OneToMany\Geocoder\Resource\ReverseGeocode;
 
 use function sprintf;
 use function trim;
@@ -91,7 +91,7 @@ final readonly class GoogleProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public function reverse(Reverse $reverse): Response
+    public function reverse(ReverseGeocode $reverse): Response
     {
         $url = $this->url('geocode', 'location');
 

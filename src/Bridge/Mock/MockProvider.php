@@ -6,7 +6,7 @@ use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\FowardGeocode;
 use OneToMany\Geocoder\Resource\Response;
-use OneToMany\Geocoder\Resource\Reverse;
+use OneToMany\Geocoder\Resource\ReverseGeocode;
 
 use function array_rand;
 use function bin2hex;
@@ -63,7 +63,7 @@ final readonly class MockProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public function reverse(Reverse $reverse): Response
+    public function reverse(ReverseGeocode $reverse): Response
     {
         return new Response(
             $this->generateId('place'),

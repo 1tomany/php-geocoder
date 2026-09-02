@@ -7,7 +7,7 @@ use OneToMany\Geocoder\Contract\GeocodingClientInterface;
 use OneToMany\Geocoder\Resource\FowardGeocode;
 use OneToMany\Geocoder\Resource\Registry;
 use OneToMany\Geocoder\Resource\Response;
-use OneToMany\Geocoder\Resource\Reverse;
+use OneToMany\Geocoder\Resource\ReverseGeocode;
 
 final readonly class GeocodingClient implements GeocodingClientInterface
 {
@@ -37,8 +37,8 @@ final readonly class GeocodingClient implements GeocodingClientInterface
      * @see OneToMany\Geocoder\Contract\GeocodingClientInterface
      */
     #[\Override]
-    public function reverse(string|GeocodingVendor $vendor, Reverse $reverse): Response
+    public function reverse(string|GeocodingVendor $vendor, ReverseGeocode $request): Response
     {
-        return $this->providers->get(GeocodingVendor::create($vendor))->reverse($reverse);
+        return $this->providers->get(GeocodingVendor::create($vendor))->reverse($request);
     }
 }

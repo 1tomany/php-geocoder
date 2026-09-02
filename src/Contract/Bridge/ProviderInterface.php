@@ -5,7 +5,7 @@ namespace OneToMany\Geocoder\Contract\Bridge;
 use OneToMany\Geocoder\GeocodingVendor;
 use OneToMany\Geocoder\Resource\FowardGeocode;
 use OneToMany\Geocoder\Resource\Response;
-use OneToMany\Geocoder\Resource\Reverse;
+use OneToMany\Geocoder\Resource\ReverseGeocode;
 
 interface ProviderInterface
 {
@@ -13,5 +13,5 @@ interface ProviderInterface
 
     public function forward(FowardGeocode $request): Response;
 
-    public function reverse(Reverse $reverse): Response;
+    public function reverse(ReverseGeocode $reverse): Response;
 }

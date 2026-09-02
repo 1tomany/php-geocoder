@@ -6,7 +6,7 @@ use OneToMany\Geocoder\Exception\DomainException;
 
 use function is_numeric;
 
-final readonly class Reverse
+final readonly class ReverseGeocode
 {
     /**
      * @var int|float|numeric-string
