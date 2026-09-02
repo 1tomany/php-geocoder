@@ -29,7 +29,7 @@ use OneToMany\Geocoder\Bridge\Mock\MockProvider;
 use OneToMany\Geocoder\Bridge\Transport;
 use OneToMany\Geocoder\GeocodingClient;
 use OneToMany\Geocoder\GeocodingVendor;
-use OneToMany\Geocoder\Resource\Geocode;
+use OneToMany\Geocoder\Resource\ForwardGeocode;
 use OneToMany\Geocoder\Resource\Reverse;
 
 $transport = new Transport(
@@ -47,9 +47,9 @@ $client = new GeocodingClient([
     new MockProvider(),
 ]);
 
-$response = $client->geocode(
+$response = $client->forward(
     GeocodingVendor::Google,
-    new Geocode(
+    new ForwardGeocode(
         '123',
         'Main Street',
         null,
