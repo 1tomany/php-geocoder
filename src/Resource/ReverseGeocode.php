@@ -9,8 +9,15 @@ use function is_numeric;
 
 final readonly class ReverseGeocode
 {
-    public float $latitude;
-    public float $longitude;
+    /**
+     * @var int|float|numeric-string
+     */
+    public int|float|string $latitude;
+
+    /**
+     * @var int|float|numeric-string
+     */
+    public int|float|string $longitude;
 
     /**
      * @throws DomainException when the latitude is not a numeric value
@@ -26,9 +33,7 @@ final readonly class ReverseGeocode
             throw new DomainException('The latitude must be a numeric value.');
         }
 
-        $latitude = (float) $latitude;
-
-        if ($latitude < -90.0 || $latitude > 90.0) {
+        if ((float) $latitude < -90.0 || (float) $latitude > 90.0) {
             throw new RangeException('The latitude must be greater than or equal to -90.0 or less than or equal to 90.0.');
         }
 
@@ -38,9 +43,7 @@ final readonly class ReverseGeocode
             throw new DomainException('The longitude must be a numeric value.');
         }
 
-        $longitude = (float) $longitude;
-
-        if ($longitude < -180.0 || $longitude > 180.0) {
+        if ((float) $longitude < -180.0 || (float) $longitude > 180.0) {
             throw new RangeException('The longitude must be greater than or equal to -180.0 or less than or equal to 180.0.');
         }
 
