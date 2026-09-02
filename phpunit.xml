@@ -6,12 +6,12 @@
   </php>
   <testsuites>
     <testsuite name="php-geocoder Test Suite">
-      <directory>./tests/</directory>
+      <directory>tests/</directory>
     </testsuite>
   </testsuites>
   <source ignoreSuppressionOfDeprecations="true">
     <include>
-      <directory>./src/</directory>
+      <directory>src/</directory>
     </include>
     <deprecationTrigger>
       <function>trigger_deprecation</function>

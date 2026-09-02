@@ -41,8 +41,8 @@ $googleApiKey = getenv('GOOGLE_API_KEY');
 
 $client = new GeocodingClient([
     new GoogleProvider(
-        transport: $transport,
-        apiKey: $googleApiKey,
+        $transport,
+        $googleApiKey,
     ),
     new MockProvider(),
 ]);
