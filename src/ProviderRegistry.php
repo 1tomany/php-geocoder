@@ -1,10 +1,9 @@
 <?php
 
-namespace OneToMany\Geocoder\Resource;
+namespace OneToMany\Geocoder;
 
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Exception\DomainException;
-use OneToMany\Geocoder\GeocodingVendor;
 
 use function sprintf;
 

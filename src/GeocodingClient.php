@@ -5,7 +5,6 @@ namespace OneToMany\Geocoder;
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Contract\GeocodingClientInterface;
 use OneToMany\Geocoder\Resource\ForwardGeocode;
-use OneToMany\Geocoder\Resource\ProviderRegistry;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\ReverseGeocode;
 

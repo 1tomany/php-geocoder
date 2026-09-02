@@ -1,11 +1,11 @@
 <?php
 
-namespace OneToMany\Geocoder\Tests\Resource;
+namespace OneToMany\Geocoder\Tests;
 
 use OneToMany\Geocoder\Bridge\Mock\MockProvider;
 use OneToMany\Geocoder\Exception\DomainException;
 use OneToMany\Geocoder\GeocodingVendor;
-use OneToMany\Geocoder\Resource\ProviderRegistry;
+use OneToMany\Geocoder\ProviderRegistry;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
