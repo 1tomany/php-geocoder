@@ -39,7 +39,7 @@ $transport = new Transport(
 
 $googleApiKey = getenv('GOOGLE_API_KEY');
 
-$geocoderClient = new GeocodingClient([
+$client = new GeocodingClient([
     new GoogleProvider(
         transport: $transport,
         apiKey: $googleApiKey,
@@ -47,14 +47,25 @@ $geocoderClient = new GeocodingClient([
     new MockProvider(),
 ]);
 
-$response = $geocoderClient->geocode(
+$response = $client->geocode(
     Vendor::Google,
-    new Geocode('123', 'Main Street', null, 'Dallas', '75205', 'TX', 'US'),
+    new Geocode(
+        '123',
+        'Main Street',
+        null,
+        'Dallas',
+        '75205',
+        'TX',
+        'US',
+    ),
 );
 
-$response = $geocoderClient->reverse(
+$response = $client->reverse(
     Vendor::Google,
-    new Reverse('32.10391494', '-96.3931030'),
+    new Reverse(
+        '32.10391494',
+        '-96.3931030',
+    ),
 );
 ```
 
