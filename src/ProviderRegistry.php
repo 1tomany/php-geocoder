@@ -1,17 +1,16 @@
 <?php
 
-namespace OneToMany\Geocoder\Resource;
+namespace OneToMany\Geocoder;
 
 use OneToMany\Geocoder\Contract\Bridge\ProviderInterface;
 use OneToMany\Geocoder\Exception\DomainException;
-use OneToMany\Geocoder\GeocodingVendor;
 
 use function sprintf;
 
 /**
  * @template T of ProviderInterface
  */
-final readonly class Registry
+final readonly class ProviderRegistry
 {
     /**
      * @var array<non-empty-lowercase-string, T>

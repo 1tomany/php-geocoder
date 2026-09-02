@@ -5,10 +5,14 @@ namespace OneToMany\Geocoder\Tests\Bridge\Google;
 use OneToMany\Geocoder\Bridge\Google\GoogleProvider;
 use OneToMany\Geocoder\Bridge\Transport;
 use OneToMany\Geocoder\Exception\DomainException;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Serializer\Serializer;
 
+#[Group('UnitTests')]
+#[Group('BridgeTests')]
+#[Group('GoogleTests')]
 final class GoogleProviderTest extends TestCase
 {
     public function testConstructorRequiresNonEmptyApiKey(): void

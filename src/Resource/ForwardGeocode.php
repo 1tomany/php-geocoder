@@ -10,7 +10,7 @@ use function is_string;
 use function trim;
 use function vsprintf;
 
-final class FowardGeocode
+final class ForwardGeocode
 {
     /**
      * @var ?non-empty-string
