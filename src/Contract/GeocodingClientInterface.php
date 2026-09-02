@@ -12,4 +12,6 @@ interface GeocodingClientInterface
     public function forward(string|GeocodingVendor $vendor, FowardGeocode $request): Response;
 
     public function reverse(string|GeocodingVendor $vendor, ReverseGeocode $request): Response;
+
+    public function request(string|GeocodingVendor $vendor, FowardGeocode|ReverseGeocode $request): Response;
 }
