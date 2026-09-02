@@ -16,7 +16,7 @@ final class GoogleProviderTest extends TestCase
         $this->expectException(DomainException::class);
         $this->expectExceptionMessageIs('The Google API key cannot be empty.');
 
-        new GoogleProvider($this->createTransport(), '');
+        new GoogleProvider($this->createTransport(), apiKey: '  ');
     }
 
     private function createTransport(): Transport

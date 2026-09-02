@@ -18,6 +18,7 @@ final readonly class GoogleProvider implements ProviderInterface
     public const string BASE_URL = 'https://geocode.googleapis.com';
 
     /**
+     * @param non-empty-string $apiKey
      * @param non-empty-string $apiVersion
      *
      * @throws DomainException when the API key is empty
@@ -27,7 +28,7 @@ final readonly class GoogleProvider implements ProviderInterface
         #[\SensitiveParameter] private string $apiKey,
         private string $apiVersion = 'v4',
     ) {
-        if ('' === $this->apiKey) {
+        if ('' === \trim($this->apiKey)) {
             throw new DomainException(sprintf('The %s API key cannot be empty.', self::getVendor()->getName()));
         }
     }
