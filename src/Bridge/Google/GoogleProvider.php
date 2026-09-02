@@ -46,16 +46,16 @@ final readonly class GoogleProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public function geocode(FowardGeocode $geocode): Response
+    public function geocode(FowardGeocode $request): Response
     {
         $url = $this->url('geocode', 'address');
 
         $query = array_filter([
-            'address.addressLines' => $geocode->line,
-            'address.locality' => $geocode->city,
-            'address.postalCode' => $geocode->zip,
-            'address.administrativeArea' => $geocode->state,
-            'address.regionCode' => $geocode->country,
+            'address.addressLines' => $request->line,
+            'address.locality' => $request->city,
+            'address.postalCode' => $request->zip,
+            'address.administrativeArea' => $request->state,
+            'address.regionCode' => $request->country,
         ]);
 
         try {

@@ -41,17 +41,17 @@ final readonly class MockProvider implements ProviderInterface
      * @see OneToMany\Geocoder\Contract\Bridge\ProviderInterface
      */
     #[\Override]
-    public function geocode(FowardGeocode $geocode): Response
+    public function geocode(FowardGeocode $request): Response
     {
         return new Response(
             $this->generateId('place'),
             null,
-            $geocode->street,
-            $geocode->unit,
-            $geocode->city,
-            $geocode->zip,
-            $geocode->state,
-            $geocode->country,
+            $request->street,
+            $request->unit,
+            $request->city,
+            $request->zip,
+            $request->state,
+            $request->country,
             $this->faker->latitude(),
             $this->faker->longitude(),
             $this->getGranularity(),

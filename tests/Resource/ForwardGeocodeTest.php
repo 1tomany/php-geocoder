@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 #[Group('UnitTests')]
 #[Group('ResourceTests')]
-final class GeocodeTest extends TestCase
+final class ForwardGeocodeTest extends TestCase
 {
     #[DataProvider('providerEmptyNumberAndStreet')]
     public function testConstructorRequiresNonEmptyNumberAndStreet(

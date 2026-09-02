@@ -11,7 +11,7 @@ interface ProviderInterface
 {
     public static function getVendor(): GeocodingVendor;
 
-    public function geocode(FowardGeocode $geocode): Response;
+    public function geocode(FowardGeocode $request): Response;
 
     public function reverse(Reverse $reverse): Response;
 }
