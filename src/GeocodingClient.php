@@ -9,7 +9,7 @@ use OneToMany\Geocoder\Resource\Registry;
 use OneToMany\Geocoder\Resource\Response;
 use OneToMany\Geocoder\Resource\Reverse;
 
-final readonly class GeocoderClient implements GeocoderClientInterface
+final readonly class GeocodingClient implements GeocoderClientInterface
 {
     /**
      * @var Registry<ProviderInterface>
