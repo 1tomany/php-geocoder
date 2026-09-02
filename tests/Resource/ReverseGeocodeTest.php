@@ -8,16 +8,26 @@ use OneToMany\Geocoder\Resource\ReverseGeocode;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
+use function bcdiv;
+
 #[Group('UnitTests')]
 #[Group('ResourceTests')]
 final class ReverseGeocodeTest extends TestCase
 {
     public function testConstructorAcceptsNumericCoordinates(): void
     {
-        $reverse = new ReverseGeocode('32.10391494', '-96.3931030');
+        $faker = \Faker\Factory::create();
 
-        $this->assertSame('32.10391494', $reverse->latitude);
-        $this->assertSame('-96.3931030', $reverse->longitude);
+        $latitude = $faker->latitude(min: -90, max: 90);
+        $latitude = bcdiv((string) $latitude, '1.0', 7);
+
+        $longitude = $faker->longitude(min: -180, max: 180);
+        $longitude = bcdiv((string) $longitude, '1.0', 7);
+
+        $reverseGeocode = new ReverseGeocode($latitude, $longitude);
+
+        $this->assertSame($latitude, $reverseGeocode->latitude);
+        $this->assertSame($longitude, $reverseGeocode->longitude);
     }
 
     public function testConstructorRequiresNumericLatitude(): void
