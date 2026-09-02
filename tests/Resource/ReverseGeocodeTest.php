@@ -8,7 +8,7 @@ use OneToMany\Geocoder\Resource\ReverseGeocode;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-use function bcdiv;
+use function sprintf;
 
 #[Group('UnitTests')]
 #[Group('ResourceTests')]
@@ -18,16 +18,16 @@ final class ReverseGeocodeTest extends TestCase
     {
         $faker = \Faker\Factory::create();
 
-        $latitude = $faker->latitude(min: -90, max: 90);
-        $latitude = bcdiv((string) $latitude, '1.0', 7);
+        $latitude = $faker->latitude();
+        $latitude = sprintf('%.6f', $latitude);
 
-        $longitude = $faker->longitude(min: -180, max: 180);
-        $longitude = bcdiv((string) $longitude, '1.0', 7);
+        $longitude = $faker->longitude();
+        $longitude = sprintf('%.6f', $longitude);
 
-        $reverseGeocode = new ReverseGeocode($latitude, $longitude);
+        $reverse = new ReverseGeocode($latitude, $longitude);
 
-        $this->assertSame($latitude, $reverseGeocode->latitude);
-        $this->assertSame($longitude, $reverseGeocode->longitude);
+        $this->assertSame($latitude, $reverse->latitude);
+        $this->assertSame($longitude, $reverse->longitude);
     }
 
     public function testConstructorRequiresNumericLatitude(): void
